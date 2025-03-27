@@ -4,13 +4,15 @@ using UnityEngine.InputSystem;
 public class PlayerStateMachine : MonoBehaviour
 {
     I_Player_State current_state;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [HideInInspector] public Rigidbody2D rb;
+    public float moveSpeed = 5f;
+
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         SwitchState(new S_Idle());
     }
 
-    // Update is called once per frame
     void Update()
     {
         current_state.UpdateState(this);
@@ -18,8 +20,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SwitchState(I_Player_State state)
     {
-        if(current_state!=null)
-        { 
+        if(current_state != null)
+        {
             current_state.ExitState(this);
         }
         current_state = state;
@@ -67,38 +69,26 @@ public class S_Walking : I_Player_State
 
     public void UpdateState(PlayerStateMachine player)
     {
-        if(Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+        Vector2 moveDir = Vector2.zero;
+
+        if (Input.GetKey(KeyCode.W)) moveDir.y += 1;
+        if (Input.GetKey(KeyCode.S)) moveDir.y -= 1;
+        if (Input.GetKey(KeyCode.D)) moveDir.x += 1;
+        if (Input.GetKey(KeyCode.A)) moveDir.x -= 1;
+
+        moveDir = moveDir.normalized;
+
+        Vector2 newPos = player.rb.position + moveDir * player.moveSpeed * Time.deltaTime;
+        player.rb.MovePosition(newPos);
+
+        if (moveDir == Vector2.zero)
         {
             player.SwitchState(new S_Idle());
-        }
-        if(Input.GetKey(KeyCode.W))
-        {
-            Vector3 POS=player.transform.position;
-            POS.y=POS.y+.01f;
-            player.transform.position=POS;
-        }
-         if(Input.GetKey(KeyCode.A))
-        {
-            Vector3 POS=player.transform.position;
-            POS.x=POS.x-.01f;
-            player.transform.position=POS;
-        }
-         if(Input.GetKey(KeyCode.S))
-        {
-            Vector3 POS=player.transform.position;
-            POS.y=POS.y-.01f;
-            player.transform.position=POS;
-        }
-         if(Input.GetKey(KeyCode.D))
-        {
-            Vector3 POS=player.transform.position;
-            POS.x=POS.x+.01f;
-            player.transform.position=POS;
         }
     }
 
     public void ExitState(PlayerStateMachine player)
     {
         Debug.Log("Leaving Walking");
-    } 
+    }
 }
