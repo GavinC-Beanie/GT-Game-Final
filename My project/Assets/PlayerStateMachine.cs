@@ -1,94 +1,87 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System. Collections.Generic;
+using System.Collections;
+[RequireComponent (typeof (Rigidbody2D))]
 
-public class PlayerStateMachine : MonoBehaviour
+public class PlayerMovementController : MonoBehaviour
 {
-    I_Player_State current_state;
-    [HideInInspector] public Rigidbody2D rb;
-    public float moveSpeed = 5f;
+[SerializeField] AnimationCurve curveY;
+Rigidbody2D rb;
+Vector2 movement;
+Vector2 currentPos;
+Vector2 landingPos;
+float landingDis;
+public float speed = 1f;
+public float timeElapsed = 0f;
+bool onGround = true;
+bool jump = false;
+void Start() 
+{
+rb = GetComponent<Rigidbody2D>();
+}
 
-    void Start()
+void Update()
+{
+    InputHandler();
+}
+
+void FixedUpdate()
+{
+    if(jump)
     {
-        rb = GetComponent<Rigidbody2D>();
-        SwitchState(new S_Idle());
+        JumpHandler();
     }
-
-    void Update()
+    else
     {
-        current_state.UpdateState(this);
-    }
-
-    public void SwitchState(I_Player_State state)
-    {
-        if(current_state != null)
-        {
-            current_state.ExitState(this);
-        }
-        current_state = state;
-        current_state.EnterState(this);
+         MovementHandler();
     }
 }
 
-public interface I_Player_State
-{
-    void EnterState(PlayerStateMachine player);
-    void UpdateState(PlayerStateMachine player);
-    void ExitState(PlayerStateMachine player);
-}
-
-public class S_Idle : I_Player_State
-{
-    public void EnterState(PlayerStateMachine player)
+void JumpHandler()
     {
-    
-        Debug.Log("Entering Idle");
-    }
-
-    public void UpdateState(PlayerStateMachine player)
-    {
-        //Debug.Log("Idle running");
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if(onGround)
         {
-            player.SwitchState(new S_Walking());
+            currentPos = rb.position;
+            landingPos = currentPos + movement.normalized * speed;
+            landingDis = Vector2.Distance(landingPos, currentPos);
+            timeElapsed = 0f;
+            onGround = false;
         }
-    
-    }
-
-    public void ExitState(PlayerStateMachine player)
-    {
-        Debug.Log("Leaving Idle");
-    } 
-}
-
-public class S_Walking : I_Player_State
-{
-    public void EnterState(PlayerStateMachine player)
-    {
-        Debug.Log("Starting Walking");
-    }
-
-    public void UpdateState(PlayerStateMachine player)
-    {
-        Vector2 moveDir = Vector2.zero;
-
-        if (Input.GetKey(KeyCode.W)) moveDir.y += 1;
-        if (Input.GetKey(KeyCode.S)) moveDir.y -= 1;
-        if (Input.GetKey(KeyCode.D)) moveDir.x += 1;
-        if (Input.GetKey(KeyCode.A)) moveDir.x -= 1;
-
-        moveDir = moveDir.normalized;
-
-        Vector2 newPos = player.rb.position + moveDir * player.moveSpeed * Time.deltaTime;
-        player.rb.MovePosition(newPos);
-
-        if (moveDir == Vector2.zero)
+        else
         {
-            player.SwitchState(new S_Idle());
+            timeElapsed += Time.fixedDeltaTime * speed / landingDis;
+            if(timeElapsed <= 1f)
+            {
+                currentPos = Vector2.MoveTowards (currentPos, landingPos, Time.fixedDeltaTime * speed);
+                rb.MovePosition(new Vector2(currentPos.x, currentPos.y + curveY.Evaluate(timeElapsed)));
+            }
+            else
+            {
+                jump = false; 
+                onGround = true;
+            }
+        }       
+    }
+
+void MovementHandler()
+    {
+        rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
+    }
+
+void InputHandler()
+    {
+        float horizontal = Input.GetAxis ("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        movement = new Vector2(horizontal, vertical);
+
+        if (Input.GetKeyDown ("space"))
+        {
+            jump = true;
         }
     }
 
-    public void ExitState(PlayerStateMachine player)
-    {
-        Debug.Log("Leaving Walking");
-    }
+
+
+
 }
