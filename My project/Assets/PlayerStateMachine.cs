@@ -7,6 +7,7 @@ public class PlayerMovementController : MonoBehaviour
 {
 [SerializeField] AnimationCurve curveY;
 Rigidbody2D rb;
+[SerializeField] Animator ani;
 Vector2 movement;
 Vector2 currentPos;
 Vector2 landingPos;
@@ -72,6 +73,15 @@ void InputHandler()
     {
         float horizontal = Input.GetAxis ("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+
+        if(horizontal ==0 && vertical ==0)
+        {
+            ani.SetBool("walking", false);
+        }
+        else 
+        {
+            ani.SetBool("walking", true);
+        }
 
         movement = new Vector2(horizontal, vertical);
 
