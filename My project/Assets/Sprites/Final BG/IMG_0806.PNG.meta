@@ -51,7 +51,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -106,10 +106,10 @@ TextureImporter:
       name: IMG_0806_0
       rect:
         serializedVersion: 2
-        x: 1848
-        y: 740
-        width: 120
-        height: 129
+        x: 1724
+        y: 0
+        width: 1312
+        height: 987
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,33 +124,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: IMG_0806_1
-      rect:
-        serializedVersion: 2
-        x: 2138
-        y: 0
-        width: 699
-        height: 743
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 93e33a357e3ac3d40800000000000000
-      internalID: 5565503453459070521
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a07889cbbc1763d48a27506ee07eb940
     internalID: 0
     vertices: []
     indices: 
@@ -159,7 +137,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      IMG_0806_0: -2288681183808906941
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

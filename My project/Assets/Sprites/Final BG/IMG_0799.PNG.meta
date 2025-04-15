@@ -54,7 +54,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -109,10 +109,10 @@ TextureImporter:
       name: IMG_0799_0
       rect:
         serializedVersion: 2
-        x: 1612
-        y: 1306
-        width: 255
-        height: 205
+        x: 1497
+        y: 1102
+        width: 952
+        height: 646
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,55 +127,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: IMG_0799_1
-      rect:
-        serializedVersion: 2
-        x: 1812
-        y: 1328
-        width: 472
-        height: 323
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f79d12ced1de338b0800000000000000
-      internalID: -5173530834147092097
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IMG_0799_2
-      rect:
-        serializedVersion: 2
-        x: 1820
-        y: 1199
-        width: 141
-        height: 122
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0aa32fb970fdb6360800000000000000
-      internalID: 7164064856037014176
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6771cb62b0a821242b88cc3476f58439
     internalID: 0
     vertices: []
     indices: 
@@ -184,7 +140,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      IMG_0799_0: 6957174953174406395
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -11,7 +11,7 @@ Rigidbody2D rb;
 Vector2 movement;
 Vector2 currentPos;
 Vector2 landingPos;
-float landingDis;
+public float landingDis;
 public float speed = 1f;
 public float timeElapsed = 0f;
 bool onGround = true;
