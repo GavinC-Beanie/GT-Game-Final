@@ -58,10 +58,18 @@ public class CharacterInteraction : MonoBehaviour
         }
     }
     
-    public void Interact()
+   public void Interact()
     {
-        Debug.Log("Interact called for " + gameObject.name + " with knot: " + characterKnot);
-        dialogueManager.StartDialogueFromKnot(characterKnot);
+    Debug.Log("Interact called for " + gameObject.name + " with knot: " + characterKnot);
+    
+    // Get the CharacterNameDisplay component from the DialogueManager GameObject
+    CharacterNameDisplay nameDisplay = dialogueManager.GetComponent<CharacterNameDisplay>();
+    if (nameDisplay != null)
+    {
+        nameDisplay.DisplayCharacterTag(gameObject);
+    }
+    
+    dialogueManager.StartDialogueFromKnot(characterKnot);
     }
     
     private void ShowInteractionPrompt(bool show)

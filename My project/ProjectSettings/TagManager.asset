@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Bill
+  - Commisioner
+  - Gram
+  - Skate
+  - Crank
+  - Pumperscoob
   layers:
   - Default
   - TransparentFX

@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 470167069}
   m_Layer: 0
   m_Name: The Crank
-  m_TagString: Untagged
+  m_TagString: Crank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1536,6 +1536,7 @@ GameObject:
   m_Component:
   - component: {fileID: 552438382}
   - component: {fileID: 552438381}
+  - component: {fileID: 552438383}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -1576,6 +1577,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &552438383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552438380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0403323da154140bdb3506b1f668c8a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 584012761}
 --- !u!1 &584012759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,7 +3082,7 @@ GameObject:
   - component: {fileID: 1044200640}
   m_Layer: 0
   m_Name: Bill
-  m_TagString: Untagged
+  m_TagString: Bill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3818,7 +3832,7 @@ GameObject:
   - component: {fileID: 1150747064}
   m_Layer: 0
   m_Name: Gram
-  m_TagString: Untagged
+  m_TagString: Gram
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4273,7 +4287,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 300, y: 1000}
+  m_AnchoredPosition: {x: -800, y: 400}
   m_SizeDelta: {x: 300, y: 859.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1267304437
@@ -4753,7 +4767,7 @@ GameObject:
   - component: {fileID: 1574087307}
   m_Layer: 0
   m_Name: Commisioner
-  m_TagString: Untagged
+  m_TagString: Commisioner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5648,7 +5662,7 @@ GameObject:
   - component: {fileID: 1823752149}
   m_Layer: 0
   m_Name: Pump
-  m_TagString: Untagged
+  m_TagString: Pumperscoob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6138,7 +6152,7 @@ GameObject:
   - component: {fileID: 1937386604}
   m_Layer: 0
   m_Name: Skate
-  m_TagString: Untagged
+  m_TagString: Skate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
