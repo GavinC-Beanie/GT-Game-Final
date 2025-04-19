@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
         // Jump to the specified knot
         story.ChoosePathString(knotName);
 
-        SetDialogueOpacity(0.20f);
+        SetDialogueOpacity(1.0f);
         
         // Begin the dialogue
         RefreshView();
