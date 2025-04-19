@@ -1,7 +1,7 @@
     
-      ===Crank===
+===Crank===
     
-    The Old Gob is rocking in his chair with his eyes closed. His sagging skin slups over the edges of his mouth, his forehead wrickile putting small waves to shame. Wlist mid rocking, the rest of his body never moves. Almost as if, he was in an eternal slumber...
+    The Old Gob is rocking in his chair with his eyes closed; Peacful, as if he were in an eternal slumber...
     
     *"Umm... Mister?"
         ->Off_my_porch

@@ -3,12 +3,18 @@ using UnityEngine.UI;
 
 public class CharacterInteraction : MonoBehaviour
 {
-    [SerializeField] private string characterKnot; // e.g., "Bill" or "Gram"
+    [SerializeField] private string characterKnot; 
+    [SerializeField] private string characterKnot2;
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private float interactionDistance = 3f;
-    [SerializeField] private GameObject interactionPrompt; // Optional UI prompt
+    [SerializeField] private float dialogueEndDistance = 3f; // Distance at which dialogue ends
+    [SerializeField] private GameObject interactionPrompt;
     
     private Transform player;
+    private bool inDialogue = false;
+
+     private int characterMeetings = 0;
+    
     
     void Start()
     {
@@ -39,39 +45,56 @@ public class CharacterInteraction : MonoBehaviour
         {
             float distance = Vector2.Distance(transform.position, player.position);
             
-            if (distance <= interactionDistance)
+            // If in dialogue, check if player has moved too far away
+            if (inDialogue)
             {
-                // Player is in range - show prompt
-                ShowInteractionPrompt(true);
-                
-                // If player presses E, start dialogue
-                if (Input.GetKeyDown(KeyCode.E))
+                if (distance > dialogueEndDistance)
                 {
-                    Debug.Log(gameObject.name + " interaction triggered with knot: " + characterKnot);
-                    Interact();
+                    Debug.Log("Player moved too far away - ending dialogue");
+                    inDialogue = false;
+                    dialogueManager.EndDialogue();
                 }
             }
+            // Not in dialogue - check for interaction
             else
             {
-                ShowInteractionPrompt(false);
+                if (distance <= interactionDistance)
+                {
+                    // Player is in range - show prompt
+                    ShowInteractionPrompt(true);
+                    
+                    // If player presses E, start dialogue
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        Debug.Log(gameObject.name + " interaction triggered with knot: " + characterKnot);
+                        inDialogue = true;
+                        Interact();
+                    }
+                }
+                else
+                {
+                    ShowInteractionPrompt(false);
+                }
             }
         }
     }
     
-   public void Interact()
+    public void Interact()
     {
-    Debug.Log("Interact called for " + gameObject.name + " with knot: " + characterKnot);
-    
-    // Get the CharacterNameDisplay component from the DialogueManager GameObject
-    CharacterNameDisplay nameDisplay = dialogueManager.GetComponent<CharacterNameDisplay>();
-    if (nameDisplay != null)
-    {
-        nameDisplay.DisplayCharacterTag(gameObject);
+        if(characterMeetings == 1) // Use == for comparison, not = which is assignment
+        {
+            dialogueManager.DisplayCharacterName(gameObject);
+            characterMeetings++; // Use a separate statement, not comma
+            dialogueManager.StartDialogueFromKnot(characterKnot2);
+        }
+        else
+        {
+            Debug.Log("Interact called for " + gameObject.name + " with knot: " + characterKnot);
+            dialogueManager.DisplayCharacterName(gameObject);
+            characterMeetings++; // Use a separate statement, not comma
+            dialogueManager.StartDialogueFromKnot(characterKnot);
+        }
     }
-    
-    dialogueManager.StartDialogueFromKnot(characterKnot);
-    }
-    
     private void ShowInteractionPrompt(bool show)
     {
         // If you have a UI prompt, enable/disable it
@@ -87,10 +110,11 @@ public class CharacterInteraction : MonoBehaviour
         }
     }
     
-    // Optional: visualize the interaction radius in the editor
-    private void OnDrawGizmosSelected()
+    // When dialogue ends externally, update our state
+    public void DialogueEnded()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, interactionDistance);
+        inDialogue = false;
     }
+    
+    
 }

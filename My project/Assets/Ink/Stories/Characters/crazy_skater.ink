@@ -1,10 +1,7 @@
-===Crazy_Skater===
-    
-    A beaten up and partially dismembered gob sits at the top of a ramp convenetly placed at the edge of an empty pool. He has no helment, and might be missing a brain too. 
+ ===Crazy_Skater===
     
     "Hell yeahhh... let's rip this shit!" 
     
-    Before you can even say anything, the gob drops down the ramp, comes up the other side of the pool getting huge air, but then comes down landind on the edge of the pool, his head geeting slit from his body turning into a splat from the contact. 
     
     *"Ummm..."
         ...

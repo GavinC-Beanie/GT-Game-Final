@@ -1,6 +1,6 @@
 ===Pump===
     
-    The beaten up gob sat sun bathing on his bench. Two milk crates held up his wooden two by four with a small carton spilled in front of him. He seemed to be out like a light. 
+    The beaten up gob sat sun bathing on his bench.  He seems to be knocked out like a light. 
     
     *"Umm... escuse me sir?"
         ->Off_my_bench
