@@ -1,23 +1,21 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class CharacterNameDisplay : MonoBehaviour
+public class NameTextScript : MonoBehaviour
 {
-    public Text nameText; // Assign your UI Text component for the name
-    
-    public void DisplayCharacterName(GameObject character)
+    public void StartGame()
     {
-        if (nameText != null && character != null)
-        {
-            nameText.text = character.name;
-        }
+        // Load your game scene - change "GameScene" to your actual scene name
+        SceneManager.LoadScene("GameScene");
     }
-    
-    public void ClearName()
+
+    public void QuitGame()
     {
-        if (nameText != null)
-        {
-            nameText.text = "";
-        }
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
+        Debug.Log("Game Quit");
     }
 }
