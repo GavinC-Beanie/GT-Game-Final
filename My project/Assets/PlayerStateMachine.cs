@@ -1,6 +1,7 @@
 using UnityEngine;
 using System. Collections.Generic;
 using System.Collections;
+using UnityEditor.Animations;
 [RequireComponent (typeof (Rigidbody2D))]
 
 public class PlayerMovementController : MonoBehaviour
@@ -16,6 +17,12 @@ public float speed = 1f;
 public float timeElapsed = 0f;
 bool onGround = true;
 bool jump = false;
+
+[SerializeField] public AnimatorController front_controller;
+[SerializeField] public AnimatorController back_controller;
+[SerializeField] public AnimatorController idle_controller;
+[SerializeField] public SpriteRenderer sprite_renderer;
+
 void Start() 
 {
 rb = GetComponent<Rigidbody2D>();
@@ -76,11 +83,37 @@ void InputHandler()
 
         if(horizontal ==0 && vertical ==0)
         {
-            ani.SetBool("walking", false);
+            if(idle_controller != null)
+            {
+                ani.runtimeAnimatorController = idle_controller;
+            }
         }
         else 
         {
-            ani.SetBool("walking", true);
+            if(vertical < 0)
+            {
+                if (horizontal > 0)
+                {
+                    sprite_renderer.flipX = true;
+                }
+                if (horizontal < 0)
+                {
+                    sprite_renderer.flipX = false;
+                }
+                ani.runtimeAnimatorController = front_controller;
+            } if(vertical > 0)
+            {
+                if (horizontal < 0)
+                {
+                    sprite_renderer.flipX = true;
+                }
+                if (horizontal > 0)
+                {
+                    sprite_renderer.flipX = false;
+                }
+                ani.runtimeAnimatorController = back_controller;
+            }
+
         }
 
         movement = new Vector2(horizontal, vertical);
