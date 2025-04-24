@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class CharacterInteraction : MonoBehaviour
 {
     [SerializeField] private string characterKnot; 
-    [SerializeField] private string characterKnot2;
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private float interactionDistance = 3f;
     [SerializeField] private float dialogueEndDistance = 3f; // Distance at which dialogue ends
@@ -81,19 +80,12 @@ public class CharacterInteraction : MonoBehaviour
     
     public void Interact()
     {
-        if(characterMeetings == 1) // Use == for comparison, not = which is assignment
-        {
-            dialogueManager.DisplayCharacterName(gameObject);
-            characterMeetings++; // Use a separate statement, not comma
-            dialogueManager.StartDialogueFromKnot(characterKnot2);
-        }
-        else
-        {
+        
             Debug.Log("Interact called for " + gameObject.name + " with knot: " + characterKnot);
             dialogueManager.DisplayCharacterName(gameObject);
             characterMeetings++; // Use a separate statement, not comma
             dialogueManager.StartDialogueFromKnot(characterKnot);
-        }
+  
     }
     private void ShowInteractionPrompt(bool show)
     {

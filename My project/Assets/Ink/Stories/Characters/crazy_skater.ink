@@ -1,5 +1,8 @@
+VAR met_skate = false
+
+
  ===Crazy_Skater===
-    
+~met_skate = true     
     "Hell yeahhh... let's rip this shit!" 
     
     

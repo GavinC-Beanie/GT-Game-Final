@@ -1894,7 +1894,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Crank
-  characterKnot2: Crank_Test
   dialogueManager: {fileID: 552438381}
   interactionDistance: 3
   dialogueEndDistance: 3
@@ -2405,7 +2404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e59398da89e702458ce42b7b0d8979d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSON: {fileID: 4900000, guid: 4bf2057af18723c46b058ef22e1fb69a, type: 3}
+  inkJSON: {fileID: 4900000, guid: 32667808dc1c7b34385a2289348d148f, type: 3}
   dialoguePanel: {fileID: 772169281}
   nameText: {fileID: 2030013494}
   npcBubblePrefab: {fileID: 5059367282003525224, guid: 70b3630a4cb033848890538fcdbaf452, type: 3}
@@ -4299,7 +4298,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Bill
-  characterKnot2: 
   dialogueManager: {fileID: 552438381}
   interactionDistance: 3
   dialogueEndDistance: 5
@@ -5410,7 +5408,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Gram
-  characterKnot2: 
   dialogueManager: {fileID: 552438381}
   interactionDistance: 3
   dialogueEndDistance: 5
@@ -6978,7 +6975,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Com
-  characterKnot2: 
   dialogueManager: {fileID: 552438381}
   interactionDistance: 3
   dialogueEndDistance: 5
@@ -8124,7 +8120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Pump
-  characterKnot2: 
   dialogueManager: {fileID: 552438381}
   interactionDistance: 3
   dialogueEndDistance: 5
@@ -8740,7 +8735,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Crazy_Skater
-  characterKnot2: 
   dialogueManager: {fileID: 552438381}
   interactionDistance: 3
   dialogueEndDistance: 5

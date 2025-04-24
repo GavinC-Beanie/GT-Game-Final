@@ -1,16 +1,16 @@
+INCLUDE characters/com.ink
 INCLUDE characters/bill.ink
-INCLUDE characters/gram.ink
 INCLUDE characters/crank.ink
 INCLUDE characters/pump.ink
 INCLUDE characters/crazy_skater.ink
-INCLUDE characters/com.ink
-INCLUDE characters/crankTest.ink
+INCLUDE characters/gram.ink
+INCLUDE characters/2ndBill.ink
+INCLUDE characters/2ndCrank.ink
+INCLUDE characters/2ndPump.ink
+INCLUDE characters/grom.ink
 
 
 
-VAR pc_name = ""
-
-~ pc_name = "{~Goober|Tooby|Ranchy|Poopermint|Tifbloob|RopRop}"
 
 VAR ComVisits = 0
 VAR GramVisits = 0

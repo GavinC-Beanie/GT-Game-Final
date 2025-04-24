@@ -1,7 +1,6 @@
 using UnityEngine;
-using System. Collections.Generic;
-using System.Collections;
-using UnityEditor.Animations;
+
+
 [RequireComponent (typeof (Rigidbody2D))]
 
 public class PlayerMovementController : MonoBehaviour
@@ -18,10 +17,10 @@ public float timeElapsed = 0f;
 bool onGround = true;
 bool jump = false;
 
-[SerializeField] public AnimatorController front_controller;
-[SerializeField] public AnimatorController back_controller;
-[SerializeField] public AnimatorController idle_controller;
-[SerializeField] public SpriteRenderer sprite_renderer;
+    [SerializeField] public RuntimeAnimatorController front_controller;
+    [SerializeField] public RuntimeAnimatorController back_controller;
+    [SerializeField] public RuntimeAnimatorController idle_controller;
+    [SerializeField] public SpriteRenderer sprite_renderer;
 
 void Start() 
 {
