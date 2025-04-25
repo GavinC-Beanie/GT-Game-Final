@@ -1,5 +1,6 @@
 
-===Back_to_Bill===
+
+===back_to_bill===
 
 "I see you're back, how's it going?"
 
@@ -43,6 +44,7 @@
 
 
 ===Try_Yourself===
+~ met_2ndBill = true
 
 "Yep, try smoking with him yourself. Maybe he'll be willing to chat!"
 
@@ -53,6 +55,11 @@
     "Of course, just trying to help!"
     ->DONE
     
+    
+    
+    
+    
+  
     
     
     

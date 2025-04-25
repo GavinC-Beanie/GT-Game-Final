@@ -1,4 +1,7 @@
-===Back_to_Crank===
+
+
+
+===back_to_crank===
 
 The Old Gob is rocking in his chair with his eyes closed; Peacful, as if he were in an eternal slumber...
     
@@ -96,7 +99,7 @@ The Old Gob is rocking in his chair with his eyes closed; Peacful, as if he were
             ->DONE
         
 ===Sus_Question
-
+~ met_2ndCrank = true
 "Well, I did see the gob who boats people taking some kid over to the corse. Was at a weird time too. Kid seemed to be fine so I wasn't worried."
     +"Very intersting!"
         "Is it now!"
@@ -106,6 +109,24 @@ The Old Gob is rocking in his chair with his eyes closed; Peacful, as if he were
             "Glad to hear. Now get off my porch!"
             ->DONE
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+->DONE
+
 
 
 

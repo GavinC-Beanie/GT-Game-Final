@@ -1,4 +1,4 @@
-VAR met_pump = false
+
 
 
 ===Pump===
@@ -22,9 +22,10 @@ VAR met_pump = false
         "I told you I don't know nothin'. Now get! I said get!" 
         ++"Look[!"] I just-" 
             "Get! I said get! I don't know nothin'! Get! Get!"
-            +++"Okay, Okay!" <>
-        ++"Okay, Okay!" <>
-    +"Okay, Okay!" <>
-        
-   - Alright... So that won't work. 
+            +++"Okay, Okay!["] I'm done, I'm done!"
+            ->DONE
+        ++"Okay, Okay!["] I'm done, I'm done!"
         ->DONE
+    +"Okay, Okay!["] I'm done, I'm done!"
+    ->DONE
+        

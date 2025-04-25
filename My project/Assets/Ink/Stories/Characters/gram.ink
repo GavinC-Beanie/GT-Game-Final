@@ -1,15 +1,22 @@
+
+
+VAR buy_pie = false
+
  ===Gram===
     //Grandma Gob is old and after a while she actually very sweet, but if you haven't baught a pie from her yet, all she will care about is seeling that first pie. After that, she'll talk about anything with anyone. But before that, she's so damn... ugh you just wanna unplug her life support you know. 
    
     "Hey there honey! Come get yourself a yummy ole pie!" 
     
-    +{not Buys_Pie}"Hey Grandma[!"], have you met Bill across the way?"
+    +{not buy_pie}"Hey Grandma[!"], have you met Bill across the way?"
         ->Shorty
-    +{not Buys_Pie}"Hi Ma'am[?"], would you happen to know anything about the golf course across the way?"
+    +{not buy_pie}"Hi Ma'am[?"], would you happen to know anything about the golf course across the way?"
         ->Shorty
-    +{not Buys_Pie}"Pies!"
+    +{not buy_pie}"Pies!"
         "<>
         ->Pies
+    +{buy_pie} [Ask some questions.] "Hey grandma, can I throw you a few questions?"
+        "Of course sweetie. <>
+        ->Talking_with_Gram
     
     
     
@@ -128,6 +135,7 @@
 
             
     ===Buys_Pie===
+    ~ buy_pie = true
     "Wonderful! Here ya go!" 
     ->After_First_Pie
     
@@ -137,23 +145,25 @@
     ===After_First_Pie===
     +"Awesome[!"], thanks!"
         "Well thank you. Anything else I can do for ya honey?"  // Acutally kind
-        ++"Acutally, yes!" 
+        ++"Acutally, yes!"
+            "<>
             ->Talking_with_Gram
         ++"Nah...["] I think I'm all good!" 
             ->DONE
     +"So...["] can I ask you a few questions now?
-        No problem at all. <> 
+        "No problem at all. <> 
             ->Talking_with_Gram
     +"There[!"], you happy!"
         "Yes, thank you so much honey. Anything else I can do for ya!" //First part snarky, second part nicer
-        ++"Acutally, yes!" 
+        ++"Acutally, yes!"
+            "<>
             ->Talking_with_Gram
         ++"Nah...["] I think I'm all good!"
             ->DONE
    
     
     ===Talking_with_Gram===
-    "So, {what's up?" | anything else?" | anything else?" | anything else?"}
+    <>So, {what's up?" | anything else?" | anything else?" | anything else?"}
     
         
     +"Do you know [about the golf corse?"]anything about the golf course over yander?"
@@ -167,7 +177,7 @@
             +++"Cool... I think I'm good!"
                 ->DONE
                 
-    +{not met_crank}"Hmm... the old man?["] The one on the porch over there?" 
+    +"Hmm... the old man?["] The one on the porch over there?" {not met_crank}
         "Oh he's just a cranky ole man. Loves that porch. Sometimes too much..."
         ++Okay...
             ->Talking_with_Gram
@@ -175,35 +185,36 @@
             ->DONE
             
             
-    +{met_crank}"The crazy gezzer maybe?["] He loves his porch a little too much!" 
+    +"The crazy gezzer maybe?["] He loves his porch a little too much!" {met_crank}
         "Oh yeah, he can be a little much. Only person i've seen calm him down is Bill actual. I try to tell him that smoking that stuff can't be good for him, but he says it does the trick." 
+            ~ asked_gram = true
         ++Okay...
             ->Talking_with_Gram
         ++"Cool... I think I'm good!"
             ->DONE
         
-    +{not met_pump}"Uhh... the tent Gob?["] What's up with him?"
+    +"Uhh... the tent Gob?["] What's up with him?" {not met_pump}
         "Not really. He's just a crazy one honestly. Damn gobs always boating somewhere." 
         ++Okay...
             ->Talking_with_Gram
         ++"Cool... I think I'm good!"
             ->DONE
         
-    +{met_pump}"What's with the tent dweller?["] He was acting crazy when I tried talking to him!"
+    +"What's with the tent dweller?["] He was acting crazy when I tried talking to him!" {met_pump}
         "Oh yeah, damn weirdos always asking for free food too. Ugh, pisses me off I tell you!"
         ++Okay...
             ->Talking_with_Gram
         ++"Cool... I think I'm good!"
             ->DONE
         
-    +{not met_skate} "Err...Who's the kid[?"] The crazy one on the ramp over there." 
+    +"Err...Who's the kid[?"] The crazy one on the ramp over there." {not met_skate}
         "Oh he's just some kid. Popped up one day and he's been messing around in that pool ever since." 
         ++Okay...
             ->Talking_with_Gram
         ++"Cool... I think I'm good!"
             ->DONE
         
-    +{met_skate} "Did that kid just die...["] Is he okay?!" 
+    +"Did that kid just die...["] Is he okay?!" {met_skate}
         "Oh I'm sure he's fine. One time he threw himslef off a roof top... both his legs looked like pretzels." 
         ++"Oh... O-kay..."
             ->Talking_with_Gram
@@ -218,12 +229,13 @@
                 ->DONE
          
     
-    ->DONE
     
-    "Awesome, I hope I was helpful."
+        - "Awesome, I hope I was helpful."
             ->DONE
     
     ===Didnt_Buy_Pie
     ->DONE
     
-    ->Home
+uy_Pie
+    ->DONE
+    

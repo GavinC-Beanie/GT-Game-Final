@@ -1,7 +1,7 @@
 
 
 
-===Back_to_Pump===
+===back_to_pump===
 
 "I told you I do't know nothin'!"
 
@@ -36,7 +36,7 @@
 
 ===The_kid
 
-"Well...this kid, he's a freak. Nice kid but weird. Makes me take him out there. Just can't say no. Hell if I kown a lic more!"
+<> "Well...this kid, he's a freak. Nice kid but weird. Makes me take him out there. Just can't say no. Hell if I kown a lic more!"
 
 +"[Where is he?]Well where could I find this freakazoid?"
     ->Where_freak
@@ -47,7 +47,7 @@
 
 
 ===Why_freak
-
+~ met_2ndPump = true
 "Ugh! He likes to piss everywhere. Also got pie on his face. Plays with weird shit! Rotten flower I tell you!"
 
 +"Weird...[where is he?"]Where could I find this pissing weirdo!"
@@ -71,6 +71,21 @@
     "No... uhhh... I'm busy right now. Maybe another time..."
     ->DONE
     
+
+
+
+
+->DONE
+
+
+
+
+
+
+
+
+
+  
 
 
 

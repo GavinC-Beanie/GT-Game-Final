@@ -1,4 +1,4 @@
-VAR met_skate = false
+
 
 
  ===Crazy_Skater===
@@ -30,5 +30,8 @@ VAR met_skate = false
     
     ===Skater_Dies===
     
-    "Well then... guess I got to come back another time. I mean... if there is another time. Did I just watch him die. Surely not right?!?! Ahh... I have better things to do." 
+    ...
+    
+    *"Well then...["] guess I got to come back another time. I mean... if there is another time. Did I just watch him die. Surely not right?!?! Ahh... I have better things to do." 
+    
     ->DONE   

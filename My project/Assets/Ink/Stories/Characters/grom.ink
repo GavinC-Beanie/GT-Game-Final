@@ -1,4 +1,5 @@
 
+
 ===Gromblar===
 
 "Woah, woah! Stranger danger! Stranger danger!"
@@ -73,7 +74,7 @@
     
     
 ===grom_ex_cont
-
+~ met_grom = true
 "Well... I go over there to touch it. It's like a portal or something. It's pretty and pink too. That's all really..."
 
 +"That's it[!"], that's the only reason!"
@@ -88,6 +89,10 @@
     ->DONE
     ++"Can't[!"], I already asked and the tent dweller seems to be busy."
     "Damn. Well bye then Stranger!"
+    ->DONE
+
+
+    !"
     ->DONE
 
 

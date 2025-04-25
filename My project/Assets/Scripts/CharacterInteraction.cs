@@ -1,112 +1,96 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CharacterInteraction : MonoBehaviour
 {
-    [SerializeField] private string characterKnot; 
-    [SerializeField] private DialogueManager dialogueManager;
+    [Header("Interaction Settings")]
+    [SerializeField] private string characterKnot;              // Knot to start in Ink
+    [SerializeField] private string characterName;              // Name used in StoryStateManager
     [SerializeField] private float interactionDistance = 3f;
-    [SerializeField] private float dialogueEndDistance = 3f; // Distance at which dialogue ends
+    [SerializeField] private float dialogueEndDistance = 5f;
+
+    [Header("References")]
+    [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private GameObject interactionPrompt;
-    
+
     private Transform player;
     private bool inDialogue = false;
+    private bool hasBeenMet = false;
 
-     private int characterMeetings = 0;
-    
-    
     void Start()
     {
-        Debug.Log(gameObject.name + " is set up with knot: " + characterKnot);
-        
-        // Find the player by tag
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (player == null)
+            Debug.LogError("Player not found — make sure they have the 'Player' tag.");
+
+        if (interactionPrompt)
+            interactionPrompt.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (!player) return;
+
+        float distance = Vector2.Distance(transform.position, player.position);
+
+        if (inDialogue)
         {
-            player = playerObject.transform;
+            if (distance > dialogueEndDistance)
+            {
+                Debug.Log($"{characterName} — Player moved too far. Ending dialogue.");
+                EndInteraction();
+            }
         }
         else
         {
-            Debug.LogError("No GameObject with Player tag found!");
-        }
-        
-        // Hide prompt at start if it exists
-        if (interactionPrompt != null)
-        {
-            interactionPrompt.SetActive(false);
-        }
-    }
-    
-    void Update()
-    {
-        // Check proximity to player
-        if (player != null)
-        {
-            float distance = Vector2.Distance(transform.position, player.position);
-            
-            // If in dialogue, check if player has moved too far away
-            if (inDialogue)
+            if (distance <= interactionDistance)
             {
-                if (distance > dialogueEndDistance)
+                ShowPrompt(true);
+
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    Debug.Log("Player moved too far away - ending dialogue");
-                    inDialogue = false;
-                    dialogueManager.EndDialogue();
+                    StartInteraction();
                 }
             }
-            // Not in dialogue - check for interaction
             else
             {
-                if (distance <= interactionDistance)
-                {
-                    // Player is in range - show prompt
-                    ShowInteractionPrompt(true);
-                    
-                    // If player presses E, start dialogue
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        Debug.Log(gameObject.name + " interaction triggered with knot: " + characterKnot);
-                        inDialogue = true;
-                        Interact();
-                    }
-                }
-                else
-                {
-                    ShowInteractionPrompt(false);
-                }
+                ShowPrompt(false);
             }
         }
     }
-    
-    public void Interact()
+
+    private void StartInteraction()
     {
-        
-            Debug.Log("Interact called for " + gameObject.name + " with knot: " + characterKnot);
-            dialogueManager.DisplayCharacterName(gameObject);
-            characterMeetings++; // Use a separate statement, not comma
-            dialogueManager.StartDialogueFromKnot(characterKnot);
-  
-    }
-    private void ShowInteractionPrompt(bool show)
-    {
-        // If you have a UI prompt, enable/disable it
-        if (interactionPrompt != null)
+        if (inDialogue || dialogueManager == null) return;
+
+        inDialogue = true;
+        dialogueManager.DisplayCharacterName(gameObject);
+        dialogueManager.StartDialogueFromKnot(characterKnot);
+
+        Debug.Log($"{characterName} — Dialogue started at knot: {characterKnot}");
+
+        if (!hasBeenMet)
         {
-            interactionPrompt.SetActive(show);
-        }
-        
-        // For debugging
-        if (show)
-        {
-            Debug.Log("Player in range of " + gameObject.name + " - press E to interact");
+            StoryStateManager.Instance?.OnCharacterMet(characterName);
+            hasBeenMet = true;
         }
     }
-    
-    // When dialogue ends externally, update our state
+
+    private void EndInteraction()
+    {
+        inDialogue = false;
+        dialogueManager.EndDialogue();
+        ShowPrompt(false);
+    }
+
     public void DialogueEnded()
     {
         inDialogue = false;
     }
-    
-    
+
+    private void ShowPrompt(bool show)
+    {
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(show);
+    }
 }

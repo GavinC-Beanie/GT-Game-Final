@@ -1,5 +1,4 @@
 
-VAR met_crank = false
    
 ===Crank===
     
@@ -14,7 +13,7 @@ VAR met_crank = false
     
     
     ===Off_my_porch===
-    ~met_crank = true
+    ~met_crank=true
     
     "Get off my porch! I said get off, get off! Get your goddamn floppers off my porch!"
     
@@ -26,5 +25,5 @@ VAR met_crank = false
         ++"Okay, Okay!" <>
     +"Okay, Okay!" <>
         
-    - Well that didn't work. Guess I got to try something else.
-        ->DONE  
+    - <>Well that didn't work. Guess I got to try something else.
+        ->DONE   
