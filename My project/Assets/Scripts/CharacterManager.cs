@@ -47,18 +47,35 @@ public class CharacterManager : MonoBehaviour
     }
 
     private void SpawnAllCharactersDisabled()
+{
+    foreach (var character in characterPrefabs)
     {
-        foreach (var character in characterPrefabs)
+        if (!spawnedCharacters.ContainsKey(character.characterName))
         {
-            if (!spawnedCharacters.ContainsKey(character.characterName))
+            if (character.prefab == null)
             {
-                GameObject instance = Instantiate(character.prefab, character.spawnPosition.position, Quaternion.identity);
-                instance.name = character.characterName;
-                instance.SetActive(false); // VERY IMPORTANT
-                spawnedCharacters.Add(character.characterName, instance);
+                Debug.LogError($"Missing prefab for character: {character.characterName}");
+                continue;
             }
+
+            if (character.spawnPosition == null)
+            {
+                Debug.LogError($"Missing spawn position for character: {character.characterName}");
+                continue;
+            }
+
+            GameObject instance = Instantiate(
+                character.prefab,
+                character.spawnPosition.position,
+                Quaternion.identity
+            );
+
+            instance.name = character.characterName;
+            instance.SetActive(false); // VERY IMPORTANT
+            spawnedCharacters.Add(character.characterName, instance);
         }
     }
+}
 
     public GameObject GetCharacter(string characterName)
     {

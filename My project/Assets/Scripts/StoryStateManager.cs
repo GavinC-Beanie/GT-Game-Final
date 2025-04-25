@@ -15,7 +15,7 @@ public class StoryStateManager : MonoBehaviour
     [SerializeField] private StoryPhase currentPhase = StoryPhase.Start;
 
     // Assign these references in the Unity Inspector to the corresponding character GameObjects
-    public GameObject Commissioner;
+    public GameObject Commisioner;
     public GameObject Bill;
     public GameObject Pump;
     public GameObject Crank;
@@ -47,7 +47,7 @@ public class StoryStateManager : MonoBehaviour
     /// <summary>Hide all character GameObjects.</summary>
     private void HideAllCharacters()
     {
-        if (Commissioner) Commissioner.SetActive(false);
+        if (Commisioner) Commisioner.SetActive(false);
         if (Bill) Bill.SetActive(false);
         if (Pump) Pump.SetActive(false);
         if (Crank) Crank.SetActive(false);
@@ -70,7 +70,7 @@ public class StoryStateManager : MonoBehaviour
         {
             case StoryPhase.Start:
                 // Only Commissioner is active at the very beginning.
-                if (Commissioner) Commissioner.SetActive(true);
+                if (Commisioner) Commisioner.SetActive(true);
                 break;
 
             case StoryPhase.FirstQuestActive:
@@ -101,7 +101,7 @@ public class StoryStateManager : MonoBehaviour
     {
         currentPhase = StoryPhase.FirstQuestActive;
         // Hide Commissioner (completed his role) and reset first quest flags
-        if (Commissioner) Commissioner.SetActive(false);
+        if (Commisioner) Commisioner.SetActive(false);
         firstQuestBillMet = firstQuestPumpMet = firstQuestCrankMet = firstQuestGobsterMet = firstQuestGramMet = false;
         // Show first quest characters
         UpdateVisibilityForPhase();
@@ -204,7 +204,7 @@ public class StoryStateManager : MonoBehaviour
         string nameKey = characterName.ToLower();  // handle name case-insensitively
         switch (nameKey)
         {
-            case "commissioner":
+            case "commisioner":
                 if (currentPhase == StoryPhase.Start)
                 {
                     // After talking to Commissioner, begin the first quest.
@@ -356,7 +356,7 @@ public class StoryStateManager : MonoBehaviour
                     {
                         StartThirdQuest();
                     }
-                    // (If for some reason Derpy wasn’t met yet, we hold off transitioning until Derpy is done.)
+                    // (If for some reason Derpy wasnï¿½t met yet, we hold off transitioning until Derpy is done.)
                 }
                 break;
         }
