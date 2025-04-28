@@ -23,6 +23,11 @@ public class StoryStateManager : MonoBehaviour
     public GameObject Gram;
     public GameObject Derpy;
     public GameObject Gromblar;
+    public GameObject Bill_the_Drawggin;
+    public GameObject Tent_Dweller;
+    public GameObject Grandpa;
+    public GameObject Boss_Man;
+    public GameObject Wheres_Bill;
 
     // Reference to the Ink story, if using Ink for narrative state
     public Story inkStory;
@@ -371,7 +376,7 @@ public class StoryStateManager : MonoBehaviour
 
         switch (nameKey)
         {
-            case "the commisioner":
+            
             case "commisioner":
                 Commisioner = characterObject;
                 break;
@@ -394,6 +399,21 @@ public class StoryStateManager : MonoBehaviour
                 Derpy = characterObject;
                 break;
             case "gromblar":
+                Gromblar = characterObject;
+                break;
+            case "Boss_Man":
+                Gromblar = characterObject;
+                break;
+            case "Bill_the_Drawggin":
+                Gromblar = characterObject;
+                break;
+            case "Wheres_Bill":
+                Gromblar = characterObject;
+                break;
+            case "Grandpa":
+                Gromblar = characterObject;
+                break;
+            case "Tent_Dweller":
                 Gromblar = characterObject;
                 break;
             default:

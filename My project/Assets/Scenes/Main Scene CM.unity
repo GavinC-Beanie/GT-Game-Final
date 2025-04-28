@@ -6643,6 +6643,11 @@ MonoBehaviour:
   Gram: {fileID: 0}
   Derpy: {fileID: 0}
   Gromblar: {fileID: 0}
+  Bill_the_Drawggin: {fileID: 0}
+  Tent_Dweller: {fileID: 0}
+  Grandpa: {fileID: 0}
+  Boss_Man: {fileID: 0}
+  Wheres_Bill: {fileID: 0}
 --- !u!1 &1559921639
 GameObject:
   m_ObjectHideFlags: 0
@@ -7783,14 +7788,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPhase: 1
-  Commisioner: {fileID: 0}
-  Bill: {fileID: 0}
-  Pump: {fileID: 0}
-  Crank: {fileID: 0}
-  Gobster: {fileID: 0}
-  Gram: {fileID: 0}
-  Derpy: {fileID: 0}
-  Gromblar: {fileID: 0}
+  Commisioner: {fileID: 3585375979211939662, guid: c1909609a9b9bde48b2116ed6bb52eeb, type: 3}
+  Bill: {fileID: 1430223715548163448, guid: 42f81c83af5f05e40b9145c778f5b275, type: 3}
+  Pump: {fileID: 181033366689707089, guid: bf0dc9f22052c2b49a28cdfd61acb74f, type: 3}
+  Crank: {fileID: 6921675875910493827, guid: 935ab119c8798844b99dc5117842befd, type: 3}
+  Gobster: {fileID: 8736663567665353329, guid: 9d0376165741422458baf1e2311ce507, type: 3}
+  Gram: {fileID: 8321731447038685175, guid: b5cde384c8e928b4485d0e0004504c68, type: 3}
+  Derpy: {fileID: 38098814156204317, guid: 3ff0bca87ae76434b92cfd618d81d894, type: 3}
+  Gromblar: {fileID: 5448384394534282548, guid: 601ef18e492e6a64f8e80421cdb797b9, type: 3}
+  Bill_the_Drawggin: {fileID: 373362488435055425, guid: 951e64a9810b6174e8d7571d35f68032, type: 3}
+  Tent_Dweller: {fileID: 2766503180610709459, guid: 8703a24443668f5449faaeb126ea9e2e, type: 3}
+  Grandpa: {fileID: 2731673020749993566, guid: fe07c1cfe2d46e1448fe2828fd43377a, type: 3}
+  Boss_Man: {fileID: 4162495434858761128, guid: f2a2c9211c6b03b4b86a88da6fb12235, type: 3}
+  Wheres_Bill: {fileID: 7811627500507301859, guid: 13fc3c9f169917b4c86b5cab7a996db6, type: 3}
 --- !u!4 &1812428959
 Transform:
   m_ObjectHideFlags: 0
