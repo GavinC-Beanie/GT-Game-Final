@@ -96,6 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6848181954342373246}
+  - component: {fileID: 7215636675334902867}
   m_Layer: 0
   m_Name: Grandma Gob
   m_TagString: Untagged
@@ -119,3 +120,21 @@ Transform:
   - {fileID: 7805327970003540012}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7215636675334902867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321731447038685175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fdf60b62996d0e44b5296a97268e576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterKnot: Gram
+  characterName: Grandma Gob
+  interactionDistance: 3
+  dialogueEndDistance: 3
+  dialogueManager: {fileID: 0}
+  interactionPrompt: {fileID: 0}

@@ -110,6 +110,8 @@ public class StoryStateManager : MonoBehaviour
         {
             inkStory.variablesState["firstQuestStarted"] = true;
         }
+
+
     }
 
     /// <summary>Transition from First Quest to Second Quest (called after Gram is interacted with).</summary>
@@ -360,5 +362,45 @@ public class StoryStateManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void AssignCharacterReference(string characterName, GameObject characterObject)
+    {
+        // Convert to lowercase for case-insensitive comparison
+        string nameKey = characterName.ToLower();
+
+        switch (nameKey)
+        {
+            case "the commisioner":
+            case "commisioner":
+                Commisioner = characterObject;
+                break;
+            case "bill":
+                Bill = characterObject;
+                break;
+            case "pump":
+                Pump = characterObject;
+                break;
+            case "crank":
+                Crank = characterObject;
+                break;
+            case "gobster":
+                Gobster = characterObject;
+                break;
+            case "gram":
+                Gram = characterObject;
+                break;
+            case "derpy":
+                Derpy = characterObject;
+                break;
+            case "gromblar":
+                Gromblar = characterObject;
+                break;
+            default:
+                Debug.LogWarning($"Character '{characterName}' not recognized in StoryStateManager.");
+                break;
+        }
+
+        Debug.Log($"Character {characterName} assigned to StoryStateManager");
     }
 }
