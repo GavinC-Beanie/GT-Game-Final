@@ -55,10 +55,10 @@ public class StoryStateManager : MonoBehaviour
         if (The_Commisioner) The_Commisioner.SetActive(false);
         if (Bill) Bill.SetActive(false);
         if (Pumplscroob) Pumplscroob.SetActive(false);
-        if (Crank) Crank.SetActive(false);
+        if (The_Crank) The_Crank.SetActive(false);
         if (Gobster) Gobster.SetActive(false);
-        if (Gram) Gram.SetActive(false);
-        if (Derpy) Derpy.SetActive(false);
+        if (Grandma_Gob) Grandma_Gob.SetActive(false);
+        if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);
         if (Gromblar) Gromblar.SetActive(false);
     }
 
@@ -84,9 +84,9 @@ public class StoryStateManager : MonoBehaviour
                 // First Quest begins: show Bill, Pump, Crank, Gobster. (Gram appears later when conditions met)
                 if (Bill) Bill.SetActive(true);
                 if (Pumplscroob) Pumplscroob.SetActive(true);
-                if (Crank) Crank.SetActive(true);
+                if (The_Crank) The_Crank.SetActive(true);
                 if (Gobster) Gobster.SetActive(true);
-                if (Gram) Gram.SetActive(false);  // Gram starts hidden
+                if (Grandma_Gob) Grandma_Gob.SetActive(false);  // Gram starts hidden
                 // Commissioner is presumably gone during the quest.
                 break;
 
@@ -108,7 +108,7 @@ public class StoryStateManager : MonoBehaviour
     {
         currentPhase = StoryPhase.FirstQuestActive;
         // Hide Commissioner (completed his role) and reset first quest flags
-        if (Commisioner) Commisioner.SetActive(false);
+        if (The_Commisioner) The_Commisioner.SetActive(false);
         firstQuestBillMet = firstQuestPumpMet = firstQuestCrankMet = firstQuestGobsterMet = firstQuestGramMet = false;
         // Show first quest characters
         UpdateVisibilityForPhase();
@@ -227,9 +227,9 @@ public class StoryStateManager : MonoBehaviour
                     firstQuestBillMet = true;
                     if (Bill) Bill.SetActive(false);  // hide Bill after meeting him
                     // If Bill **and** Crank are met, reveal Gram for the next step.
-                    if (Gram && firstQuestCrankMet && !Gram.activeSelf)
+                    if (Grandma_Gob && firstQuestCrankMet && !Grandma_Gob.activeSelf)
                     {
-                        Gram.SetActive(true);
+                        Grandma_Gob.SetActive(true);
                     }
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("billMet"))
                     {
@@ -241,8 +241,8 @@ public class StoryStateManager : MonoBehaviour
                     secondQuestBillMet = true;
                     if (Bill) Bill.SetActive(false);
                     // After finishing Bill in second quest, activate Crank and Derpy.
-                    if (Crank) Crank.SetActive(true);
-                    if (Derpy) Derpy.SetActive(true);
+                    if (The_Crank) The_Crank.SetActive(true);
+                    if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(true);
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("bill2Met"))
                     {
                         inkStory.variablesState["bill2Met"] = true;
@@ -277,11 +277,11 @@ public class StoryStateManager : MonoBehaviour
                 if (currentPhase == StoryPhase.FirstQuestActive)
                 {
                     firstQuestCrankMet = true;
-                    if (Crank) Crank.SetActive(false);
+                    if (The_Crank) The_Crank.SetActive(false);
                     // If Crank **and** Bill are met, reveal Gram.
-                    if (Gram && firstQuestBillMet && !Gram.activeSelf)
+                    if (Grandma_Gob && firstQuestBillMet && !Grandma_Gob.activeSelf)
                     {
-                        Gram.SetActive(true);
+                        Grandma_Gob.SetActive(true);
                     }
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("crankMet"))
                     {
@@ -291,13 +291,13 @@ public class StoryStateManager : MonoBehaviour
                 else if (currentPhase == StoryPhase.SecondQuestActive)
                 {
                     secondQuestCrankMet = true;
-                    if (Crank) Crank.SetActive(false);
+                    if (The_Crank) The_Crank.SetActive(false);
                     // If Crank and Derpy are both done in second quest, move to Pump.
                     if (secondQuestDerpyMet)
                     {
                         // Both NPCs in this stage are met, proceed to Pump.
-                        if (Derpy) Derpy.SetActive(false);  // (Derpy would already be inactive if interacted with)
-                        if (Pump) Pump.SetActive(true);
+                        if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);  // (Derpy would already be inactive if interacted with)
+                        if (Pumplscroob) Pumplscroob.SetActive(true);
                     }
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("crank2Met"))
                     {
@@ -323,7 +323,7 @@ public class StoryStateManager : MonoBehaviour
                 if (currentPhase == StoryPhase.FirstQuestActive)
                 {
                     firstQuestGramMet = true;
-                    if (Gram) Gram.SetActive(false);
+                    if (Grandma_Gob) Grandma_Gob.SetActive(false);
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("gramMet"))
                     {
                         inkStory.variablesState["gramMet"] = true;
@@ -337,11 +337,11 @@ public class StoryStateManager : MonoBehaviour
                 if (currentPhase == StoryPhase.SecondQuestActive)
                 {
                     secondQuestDerpyMet = true;
-                    if (Derpy) Derpy.SetActive(false);
+                    if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);
                     // If Derpy and Crank are now both met, proceed to Pump.
                     if (secondQuestCrankMet)
                     {
-                        if (Pump) Pump.SetActive(true);
+                        if (Pumplscroob) Pumplscroob.SetActive(true);
                     }
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("derpyMet"))
                     {
@@ -380,31 +380,31 @@ public class StoryStateManager : MonoBehaviour
         {
             
             case "commisioner":
-                Commisioner = characterObject;
+                The_Commisioner = characterObject;
                 break;
             case "bill":
                 Bill = characterObject;
                 break;
             case "pump":
-                Pump = characterObject;
+                Pumplscroob = characterObject;
                 break;
             case "crank":
-                Crank = characterObject;
+                The_Crank = characterObject;
                 break;
             case "gobster":
                 Gobster = characterObject;
                 break;
             case "gram":
-                Gram = characterObject;
+                Grandma_Gob = characterObject;
                 break;
             case "derpy":
-                Derpy = characterObject;
+                Derpy_Unicorn_Buttponey = characterObject;
                 break;
             case "gromblar":
                 Gromblar = characterObject;
                 break;
             case "Boss_Man":
-                Gromblar = characterObject;
+                Boss_Man = characterObject;
                 break;
             case "Bill_the_Drawggin":
                 Gromblar = characterObject;
