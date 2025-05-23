@@ -15,13 +15,13 @@ public class StoryStateManager : MonoBehaviour
     [SerializeField] private StoryPhase currentPhase = StoryPhase.Start;
 
     // Assign these references in the Unity Inspector to the corresponding character GameObjects
-    public GameObject Commisioner;
+    public GameObject The_Commisioner;
     public GameObject Bill;
-    public GameObject Pump;
-    public GameObject Crank;
+    public GameObject Pumplscroob;
+    public GameObject The_Crank;
     public GameObject Gobster;
-    public GameObject Gram;
-    public GameObject Derpy;
+    public GameObject Grandma_Gob;
+    public GameObject Derpy_Unicorn_Buttponey;
     public GameObject Gromblar;
     public GameObject Bill_the_Drawggin;
     public GameObject Tent_Dweller;
@@ -38,12 +38,12 @@ public class StoryStateManager : MonoBehaviour
 
     void Start()
     {
-        // Begin in the Start phase (Commissioner only)
+        // Begin in the Start phase (The_Commisioner only)
         currentPhase = StoryPhase.Start;
 
         CharacterManager.Instance.HideAllCharacters();
 
-        // Show only the Commissioner
+        // Show only the The_Commisioner
         CharacterManager.Instance.ShowCharacter("The Commisioner");
 
         UpdateVisibilityForPhase();
@@ -52,9 +52,9 @@ public class StoryStateManager : MonoBehaviour
     /// <summary>Hide all character GameObjects.</summary>
     private void HideAllCharacters()
     {
-        if (Commisioner) Commisioner.SetActive(false);
+        if (The_Commisioner) The_Commisioner.SetActive(false);
         if (Bill) Bill.SetActive(false);
-        if (Pump) Pump.SetActive(false);
+        if (Pumplscroob) Pumplscroob.SetActive(false);
         if (Crank) Crank.SetActive(false);
         if (Gobster) Gobster.SetActive(false);
         if (Gram) Gram.SetActive(false);
@@ -71,17 +71,19 @@ public class StoryStateManager : MonoBehaviour
     {
         HideAllCharacters();  // start by hiding everyone
 
+
+
         switch (currentPhase)
         {
             case StoryPhase.Start:
-                // Only Commissioner is active at the very beginning.
-                if (Commisioner) Commisioner.SetActive(true);
+                // Only The_Commisioner is active at the very beginning.
+                if (The_Commisioner) The_Commisioner.SetActive(true);
                 break;
 
             case StoryPhase.FirstQuestActive:
                 // First Quest begins: show Bill, Pump, Crank, Gobster. (Gram appears later when conditions met)
                 if (Bill) Bill.SetActive(true);
-                if (Pump) Pump.SetActive(true);
+                if (Pumplscroob) Pumplscroob.SetActive(true);
                 if (Crank) Crank.SetActive(true);
                 if (Gobster) Gobster.SetActive(true);
                 if (Gram) Gram.SetActive(false);  // Gram starts hidden
@@ -252,7 +254,7 @@ public class StoryStateManager : MonoBehaviour
                 if (currentPhase == StoryPhase.FirstQuestActive)
                 {
                     firstQuestPumpMet = true;
-                    if (Pump) Pump.SetActive(false);
+                    if (Pumplscroob) Pumplscroob.SetActive(false);
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("pumpMet"))
                     {
                         inkStory.variablesState["pumpMet"] = true;
@@ -261,7 +263,7 @@ public class StoryStateManager : MonoBehaviour
                 else if (currentPhase == StoryPhase.SecondQuestActive)
                 {
                     secondQuestPumpMet = true;
-                    if (Pump) Pump.SetActive(false);
+                    if (Pumplscroob) Pumplscroob.SetActive(false);
                     // After Pump in second quest, show Gromblar.
                     if (Gromblar) Gromblar.SetActive(true);
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("pump2Met"))

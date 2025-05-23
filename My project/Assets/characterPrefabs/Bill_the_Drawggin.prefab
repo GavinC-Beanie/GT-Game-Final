@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8520383998522463937}
   - component: {fileID: -2941476130444154398}
   m_Layer: 0
-  m_Name: Bill the Drawggin'
+  m_Name: Bill_the_Drawggin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

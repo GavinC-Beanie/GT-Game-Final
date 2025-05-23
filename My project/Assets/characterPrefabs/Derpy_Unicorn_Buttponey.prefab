@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3585375979211939662
+--- !u!1 &38098814156204317
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 596958562537225459}
-  - component: {fileID: 5493332083669086006}
+  - component: {fileID: 2450008038500598020}
+  - component: {fileID: 452780734641402939}
   m_Layer: 0
-  m_Name: The Commisioner
+  m_Name: Derpy_Unicorn_Buttponey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &596958562537225459
+  m_IsActive: 0
+--- !u!4 &2450008038500598020
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3585375979211939662}
+  m_GameObject: {fileID: 38098814156204317}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.64, y: 7.26, z: 0.5755712}
+  m_LocalPosition: {x: -7.4659076, y: 6.0127544, z: 0.5755712}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8739323892089955384}
+  - {fileID: 6712830721535332217}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5493332083669086006
+--- !u!114 &452780734641402939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3585375979211939662}
+  m_GameObject: {fileID: 38098814156204317}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fdf60b62996d0e44b5296a97268e576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterKnot: Com
-  characterName: Thye Commisioner
+  characterKnot: Derpy
+  characterName: Derpy Unicorn Buttponey
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}
   interactionPrompt: {fileID: 0}
---- !u!1 &7409975833262782841
+--- !u!1 &3874855280376364028
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,8 +59,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8739323892089955384}
-  - component: {fileID: 3398624304107549409}
+  - component: {fileID: 6712830721535332217}
+  - component: {fileID: 2680239843136241262}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -68,28 +68,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8739323892089955384
+--- !u!4 &6712830721535332217
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409975833262782841}
+  m_GameObject: {fileID: 3874855280376364028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.321, y: 0.3266, z: -0.5756}
-  m_LocalScale: {x: 1.5681, y: 1.5681, z: 1.5681}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5756}
+  m_LocalScale: {x: 0.96422464, y: 0.96422464, z: 0.96422464}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 596958562537225459}
+  m_Father: {fileID: 2450008038500598020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3398624304107549409
+--- !u!212 &2680239843136241262
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409975833262782841}
+  m_GameObject: {fileID: 3874855280376364028}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -127,7 +127,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 25
-  m_Sprite: {fileID: 4037286319140695109, guid: 4b4443436b04c4c439566ffb2ba0ec87, type: 3}
+  m_Sprite: {fileID: 3181713971001089279, guid: 8c9ec6a7dc55df44c8da887044b704de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

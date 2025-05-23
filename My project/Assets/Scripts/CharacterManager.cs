@@ -47,6 +47,10 @@ public class CharacterManager : MonoBehaviour
             {
                 Debug.LogError("No StoryStateManager found. Character references won't be populated.");
             }
+            else
+            {
+                Debug.LogError("StoryStateManager found!");
+            }
         }
 
         // Find DialogueManager if not set in inspector
@@ -56,6 +60,10 @@ public class CharacterManager : MonoBehaviour
             if (dialogueManager == null)
             {
                 Debug.LogError("No DialogueManager found. Character dialogue won't function properly.");
+            }
+            else
+            {
+                Debug.LogError("DialogueManager found!");
             }
         }
     }
