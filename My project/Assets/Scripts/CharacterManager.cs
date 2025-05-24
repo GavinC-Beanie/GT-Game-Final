@@ -49,7 +49,7 @@ public class CharacterManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("StoryStateManager found!");
+                Debug.Log("StoryStateManager found!");
             }
         }
 
@@ -63,7 +63,7 @@ public class CharacterManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("DialogueManager found!");
+                Debug.Log("DialogueManager found!");
             }
         }
     }
@@ -173,7 +173,6 @@ public class CharacterManager : MonoBehaviour
             character.SetActive(false);
         }
     }
-
 
     public void HideAllCharacters()
     {

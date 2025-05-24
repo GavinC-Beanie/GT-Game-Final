@@ -33,7 +33,7 @@ public class StoryStateManager : MonoBehaviour
     public Story inkStory;
 
     // Flags to track which characters have been met in the current phase
-    private bool firstQuestBillMet, firstQuestPumpMet, firstQuestCrankMet, firstQuestGobsterMet, firstQuestGramMet;
+    private bool  firstQuestComlMet, firstQuestBillMet, firstQuestPumpMet, firstQuestCrankMet, firstQuestGobsterMet, firstQuestGramMet;
     private bool secondQuestBillMet, secondQuestCrankMet, secondQuestDerpyMet, secondQuestPumpMet, secondQuestGromblarMet;
 
     void Start()
@@ -44,7 +44,7 @@ public class StoryStateManager : MonoBehaviour
         CharacterManager.Instance.HideAllCharacters();
 
         // Show only the The_Commisioner
-        CharacterManager.Instance.ShowCharacter("The Commisioner");
+        CharacterManager.Instance.ShowCharacter("The_Commisioner");
 
         UpdateVisibilityForPhase();
     }
@@ -54,12 +54,16 @@ public class StoryStateManager : MonoBehaviour
     {
         if (The_Commisioner) The_Commisioner.SetActive(false);
         if (Bill) Bill.SetActive(false);
+        if (Bill_the_Drawggin) Bill_the_Drawggin.SetActive(false);
         if (Pumplscroob) Pumplscroob.SetActive(false);
         if (The_Crank) The_Crank.SetActive(false);
         if (Gobster) Gobster.SetActive(false);
         if (Grandma_Gob) Grandma_Gob.SetActive(false);
         if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);
         if (Gromblar) Gromblar.SetActive(false);
+        if (Boss_Man) Boss_Man.SetActive(false);
+        if (Wheres_Bill) Wheres_Bill.SetActive(false);
+        if (Tent_Dweller) Tent_Dweller.SetActive(false);
     }
 
 
@@ -75,17 +79,14 @@ public class StoryStateManager : MonoBehaviour
 
         switch (currentPhase)
         {
-            case StoryPhase.Start:
-                // Only The_Commisioner is active at the very beginning.
-                if (The_Commisioner) The_Commisioner.SetActive(true);
-                break;
-
             case StoryPhase.FirstQuestActive:
+                Debug.Log("first quest");
                 // First Quest begins: show Bill, Pump, Crank, Gobster. (Gram appears later when conditions met)
-                if (Bill) Bill.SetActive(true);
-                if (Pumplscroob) Pumplscroob.SetActive(true);
-                if (The_Crank) The_Crank.SetActive(true);
-                if (Gobster) Gobster.SetActive(true);
+                if (The_Commisioner) The_Commisioner.SetActive(true);
+                if (Bill) Bill.SetActive(false);
+                if (Pumplscroob) Pumplscroob.SetActive(false);
+                if (The_Crank) The_Crank.SetActive(false);
+                if (Gobster) Gobster.SetActive(false);
                 if (Grandma_Gob) Grandma_Gob.SetActive(false);  // Gram starts hidden
                 // Commissioner is presumably gone during the quest.
                 break;
@@ -104,22 +105,7 @@ public class StoryStateManager : MonoBehaviour
     }
 
     /// <summary>Transition from Start phase to First Quest.</summary>
-    public void StartFirstQuest()
-    {
-        currentPhase = StoryPhase.FirstQuestActive;
-        // Hide Commissioner (completed his role) and reset first quest flags
-        if (The_Commisioner) The_Commisioner.SetActive(false);
-        firstQuestBillMet = firstQuestPumpMet = firstQuestCrankMet = firstQuestGobsterMet = firstQuestGramMet = false;
-        // Show first quest characters
-        UpdateVisibilityForPhase();
-        // Sync with Ink story if a variable exists
-        if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("firstQuestStarted"))
-        {
-            inkStory.variablesState["firstQuestStarted"] = true;
-        }
-
-
-    }
+    
 
     /// <summary>Transition from First Quest to Second Quest (called after Gram is interacted with).</summary>
     public void StartSecondQuest()
@@ -214,10 +200,17 @@ public class StoryStateManager : MonoBehaviour
         switch (nameKey)
         {
             case "commisioner":
-                if (currentPhase == StoryPhase.Start)
+                if (currentPhase == StoryPhase.FirstQuestActive)
                 {
-                    // After talking to Commissioner, begin the first quest.
-                    StartFirstQuest();
+                    firstQuestComlMet = true;
+                    if (The_Commisioner) The_Commisioner.SetActive(false);
+
+                    if (Bill_the_Drawggin) Bill_the_Drawggin.SetActive(true);
+                    if (Pumplscroob) Pumplscroob.SetActive(true);
+                    if (The_Crank) The_Crank.SetActive(true);
+                    if (Gobster) Gobster.SetActive(true);
+
+
                 }
                 break;
 
@@ -379,22 +372,22 @@ public class StoryStateManager : MonoBehaviour
         switch (nameKey)
         {
             
-            case "commisioner":
+            case "the commisioner":
                 The_Commisioner = characterObject;
                 break;
             case "bill":
                 Bill = characterObject;
                 break;
-            case "pump":
+            case "pumplscroob":
                 Pumplscroob = characterObject;
                 break;
-            case "crank":
+            case "the crank":
                 The_Crank = characterObject;
                 break;
             case "gobster":
                 Gobster = characterObject;
                 break;
-            case "gram":
+            case "grandma gob":
                 Grandma_Gob = characterObject;
                 break;
             case "derpy":
@@ -403,26 +396,26 @@ public class StoryStateManager : MonoBehaviour
             case "gromblar":
                 Gromblar = characterObject;
                 break;
-            case "Boss_Man":
+            case "boss man":
                 Boss_Man = characterObject;
                 break;
-            case "Bill_the_Drawggin":
-                Gromblar = characterObject;
+            case "bill the drawggin'":
+                Bill_the_Drawggin = characterObject;
                 break;
-            case "Wheres_Bill":
-                Gromblar = characterObject;
+            case "where's bill":
+                Wheres_Bill = characterObject;
                 break;
-            case "Grandpa":
-                Gromblar = characterObject;
+            case "grandpa!":
+                Grandpa = characterObject;
                 break;
-            case "Tent_Dweller":
-                Gromblar = characterObject;
+            case "tent dweller":
+                Tent_Dweller = characterObject;
                 break;
             default:
-                Debug.LogWarning($"Character '{characterName}' not recognized in StoryStateManager.");
+                Debug.LogWarning($"Character ({nameKey}) not recognized in StoryStateManager.");
                 break;
         }
 
-        Debug.Log($"Character {characterName} assigned to StoryStateManager");
+        Debug.Log($"Character {nameKey} assigned to StoryStateManager");
     }
 }
