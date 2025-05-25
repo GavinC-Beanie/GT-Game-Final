@@ -5458,37 +5458,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1190554831
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1190554832}
-  m_Layer: 0
-  m_Name: SpawnCom2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1190554832
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190554831}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.89, y: 7.58, z: 2.2735426}
-  m_LocalScale: {x: 6.03, y: 1.17, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1210785352
 GameObject:
   m_ObjectHideFlags: 0
@@ -6646,7 +6615,6 @@ MonoBehaviour:
   Bill_the_Drawggin: {fileID: 0}
   Tent_Dweller: {fileID: 0}
   Grandpa: {fileID: 0}
-  Boss_Man: {fileID: 0}
   Wheres_Bill: {fileID: 0}
 --- !u!1 &1559921639
 GameObject:
@@ -7799,7 +7767,6 @@ MonoBehaviour:
   Bill_the_Drawggin: {fileID: 373362488435055425, guid: 951e64a9810b6174e8d7571d35f68032, type: 3}
   Tent_Dweller: {fileID: 2766503180610709459, guid: 8703a24443668f5449faaeb126ea9e2e, type: 3}
   Grandpa: {fileID: 2731673020749993566, guid: fe07c1cfe2d46e1448fe2828fd43377a, type: 3}
-  Boss_Man: {fileID: 5448384394534282548, guid: 601ef18e492e6a64f8e80421cdb797b9, type: 3}
   Wheres_Bill: {fileID: 7811627500507301859, guid: 13fc3c9f169917b4c86b5cab7a996db6, type: 3}
 --- !u!4 &1812428959
 Transform:
@@ -8489,7 +8456,7 @@ MonoBehaviour:
     story_state_manager: {fileID: 1812428958}
   - characterName: Boss Man
     prefab: {fileID: 4162495434858761128, guid: f2a2c9211c6b03b4b86a88da6fb12235, type: 3}
-    spawnPosition: {fileID: 1190554832}
+    spawnPosition: {fileID: 0}
     story_state_manager: {fileID: 1812428958}
   - characterName: Bill the Drawggin'
     prefab: {fileID: 1430223715548163448, guid: 42f81c83af5f05e40b9145c778f5b275, type: 3}
@@ -9236,7 +9203,6 @@ SceneRoots:
   - {fileID: 622975258}
   - {fileID: 1781403112}
   - {fileID: 971749536}
-  - {fileID: 1190554832}
   - {fileID: 126425395}
   - {fileID: 1584508130}
   - {fileID: 1184312993}

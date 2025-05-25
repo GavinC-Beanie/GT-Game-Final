@@ -27,7 +27,6 @@ public class StoryStateManager : MonoBehaviour
     public GameObject Bill_the_Drawggin;
     public GameObject Tent_Dweller;
     public GameObject Grandpa;
-    public GameObject Boss_Man;
     public GameObject Wheres_Bill;
 
     // Reference to the Ink story, if using Ink for narrative state
@@ -64,7 +63,6 @@ public class StoryStateManager : MonoBehaviour
         if (Gromblar) Gromblar.SetActive(false);
         if (Wheres_Bill) Wheres_Bill.SetActive(false);
         if (Tent_Dweller) Tent_Dweller.SetActive(false);
-        if (Boss_Man) Boss_Man.SetActive(false);
         if (Grandpa) Grandpa.SetActive(false);
     }
 
@@ -87,10 +85,7 @@ public class StoryStateManager : MonoBehaviour
                 {
                 Debug.Log("The Com set true");
         }
-                if (Boss_Man) Boss_Man.SetActive(false);
-                {
-                Debug.Log("Boss Man set false");
-        }
+                
                 if (Bill) Bill.SetActive(false);
                 if (Pumplscroob) Pumplscroob.SetActive(false);
                 if (The_Crank) The_Crank.SetActive(false);
@@ -372,7 +367,7 @@ public class StoryStateManager : MonoBehaviour
                 break;
 
             case "where's bill":
-                 if (currentPhase == StoryPhase.ThirdQuestActive)
+                if (currentPhase == StoryPhase.ThirdQuestActive)
                 {
                     thirdQuestBillMet = true;
                     if (Wheres_Bill) Wheres_Bill.SetActive(false);
@@ -384,21 +379,9 @@ public class StoryStateManager : MonoBehaviour
                 // Gobster is not part of second quest, so no case for SecondQuestActive.
                 break;
 
-            case "boss man":
-                if (currentPhase == StoryPhase.ThirdQuestActive)
-                {
-                    thirdQuestComMet = true;
-                    if (Boss_Man) Boss_Man.SetActive(false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("gobsterMet"))
-                    {
-                        inkStory.variablesState["gobsterMet"] = true;
-                    }
-                }
-                // Gobster is not part of second quest, so no case for SecondQuestActive.
-                break;
         }
     }
-
+    
     public void AssignCharacterReference(string characterName, GameObject characterObject)
     {
         // Convert to lowercase for case-insensitive comparison
@@ -431,9 +414,7 @@ public class StoryStateManager : MonoBehaviour
             case "gromblar":
                 Gromblar = characterObject;
                 break;
-            case "boss man":
-                Boss_Man = characterObject;
-                break;
+        
             case "bill the drawggin'":
                 Bill_the_Drawggin = characterObject;
                 break;
@@ -450,7 +431,7 @@ public class StoryStateManager : MonoBehaviour
                 Debug.LogWarning($"Character ({nameKey}) not recognized in StoryStateManager.");
                 break;
         }
-        
+
     }
     
 }
