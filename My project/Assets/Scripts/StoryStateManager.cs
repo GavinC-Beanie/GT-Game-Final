@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Ink.Runtime;  // Ensure you have the Ink runtime imported to use Ink.Runtime.Story
+using Ink.Runtime;
+using Unity.VisualScripting;  // Ensure you have the Ink runtime imported to use Ink.Runtime.Story
 
 public class StoryStateManager : MonoBehaviour
 {
@@ -33,18 +34,18 @@ public class StoryStateManager : MonoBehaviour
     public Story inkStory;
 
     // Flags to track which characters have been met in the current phase
-    private bool  firstQuestComlMet, firstQuestBillMet, firstQuestPumpMet, firstQuestCrankMet, firstQuestGobsterMet, firstQuestGramMet;
+    private bool firstQuestComMet, firstQuestBillMet, firstQuestPumpMet, firstQuestCrankMet, firstQuestGobsterMet, firstQuestGramMet;
     private bool secondQuestBillMet, secondQuestCrankMet, secondQuestDerpyMet, secondQuestPumpMet, secondQuestGromblarMet;
-
+    private bool thirdQuestBillMet, thirdQuestComMet;
     void Start()
     {
         // Begin in the Start phase (The_Commisioner only)
         currentPhase = StoryPhase.Start;
 
-        CharacterManager.Instance.HideAllCharacters();
+        HideAllCharacters();
 
         // Show only the The_Commisioner
-        CharacterManager.Instance.ShowCharacter("The_Commisioner");
+        
 
         UpdateVisibilityForPhase();
     }
@@ -61,9 +62,10 @@ public class StoryStateManager : MonoBehaviour
         if (Grandma_Gob) Grandma_Gob.SetActive(false);
         if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);
         if (Gromblar) Gromblar.SetActive(false);
-        if (Boss_Man) Boss_Man.SetActive(false);
         if (Wheres_Bill) Wheres_Bill.SetActive(false);
         if (Tent_Dweller) Tent_Dweller.SetActive(false);
+        if (Boss_Man) Boss_Man.SetActive(false);
+        if (Grandpa) Grandpa.SetActive(false);
     }
 
 
@@ -73,16 +75,22 @@ public class StoryStateManager : MonoBehaviour
     /// <summary>Show/hide characters based on the current story phase.</summary>
     private void UpdateVisibilityForPhase()
     {
-        HideAllCharacters();  // start by hiding everyone
-
-
-
+        Debug.Log("updating visiblity");
+        
+        Debug.Log("CURRENT PHASE: " + currentPhase);
         switch (currentPhase)
         {
-            case StoryPhase.FirstQuestActive:
-                Debug.Log("first quest");
+            case StoryPhase.Start:
+                Debug.Log("PHASE START");
                 // First Quest begins: show Bill, Pump, Crank, Gobster. (Gram appears later when conditions met)
                 if (The_Commisioner) The_Commisioner.SetActive(true);
+                {
+                Debug.Log("The Com set true");
+        }
+                if (Boss_Man) Boss_Man.SetActive(false);
+                {
+                Debug.Log("Boss Man set false");
+        }
                 if (Bill) Bill.SetActive(false);
                 if (Pumplscroob) Pumplscroob.SetActive(false);
                 if (The_Crank) The_Crank.SetActive(false);
@@ -100,12 +108,13 @@ public class StoryStateManager : MonoBehaviour
             case StoryPhase.ThirdQuestActive:
                 // Third Quest begins: no previous characters should remain.
                 // (Activate any new third quest characters here if applicable; none specified in this scenario.)
+                if (Wheres_Bill) Wheres_Bill.SetActive(true);
                 break;
         }
     }
 
     /// <summary>Transition from Start phase to First Quest.</summary>
-    
+
 
     /// <summary>Transition from First Quest to Second Quest (called after Gram is interacted with).</summary>
     public void StartSecondQuest()
@@ -202,7 +211,7 @@ public class StoryStateManager : MonoBehaviour
             case "commisioner":
                 if (currentPhase == StoryPhase.FirstQuestActive)
                 {
-                    firstQuestComlMet = true;
+                    firstQuestComMet = true;
                     if (The_Commisioner) The_Commisioner.SetActive(false);
 
                     if (Bill_the_Drawggin) Bill_the_Drawggin.SetActive(true);
@@ -361,6 +370,32 @@ public class StoryStateManager : MonoBehaviour
                     // (If for some reason Derpy wasn�t met yet, we hold off transitioning until Derpy is done.)
                 }
                 break;
+
+            case "where's bill":
+                 if (currentPhase == StoryPhase.ThirdQuestActive)
+                {
+                    thirdQuestBillMet = true;
+                    if (Wheres_Bill) Wheres_Bill.SetActive(false);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("bill3Met"))
+                    {
+                        inkStory.variablesState["bill3Met"] = true;
+                    }
+                }
+                // Gobster is not part of second quest, so no case for SecondQuestActive.
+                break;
+
+            case "boss man":
+                if (currentPhase == StoryPhase.ThirdQuestActive)
+                {
+                    thirdQuestComMet = true;
+                    if (Boss_Man) Boss_Man.SetActive(false);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("gobsterMet"))
+                    {
+                        inkStory.variablesState["gobsterMet"] = true;
+                    }
+                }
+                // Gobster is not part of second quest, so no case for SecondQuestActive.
+                break;
         }
     }
 
@@ -371,7 +406,7 @@ public class StoryStateManager : MonoBehaviour
 
         switch (nameKey)
         {
-            
+
             case "the commisioner":
                 The_Commisioner = characterObject;
                 break;
@@ -390,7 +425,7 @@ public class StoryStateManager : MonoBehaviour
             case "grandma gob":
                 Grandma_Gob = characterObject;
                 break;
-            case "derpy":
+            case "derpy unicorn buttponey":
                 Derpy_Unicorn_Buttponey = characterObject;
                 break;
             case "gromblar":
@@ -415,7 +450,7 @@ public class StoryStateManager : MonoBehaviour
                 Debug.LogWarning($"Character ({nameKey}) not recognized in StoryStateManager.");
                 break;
         }
-
-        Debug.Log($"Character {nameKey} assigned to StoryStateManager");
+        
     }
+    
 }

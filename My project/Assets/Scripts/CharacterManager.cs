@@ -120,6 +120,7 @@ public class CharacterManager : MonoBehaviour
                 SetupCharacterInteraction(instance);
             }
         }
+        Debug.Log("Spawned All character Disabled");
     }
 
     private void SetupCharacterInteraction(GameObject characterObject)
@@ -174,16 +175,7 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public void HideAllCharacters()
-    {
-        foreach (var character in spawnedCharacters.Values)
-        {
-            if (character != null)
-            {
-                character.SetActive(false);
-            }
-        }
-    }
+    
 
     public void ShowCharacter(string characterName)
     {
