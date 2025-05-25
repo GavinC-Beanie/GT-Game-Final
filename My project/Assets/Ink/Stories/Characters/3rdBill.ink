@@ -5,11 +5,12 @@
 ...
 
 *"Damn[!"], I really wanted to see bill again! Guess I'll just go see the commisioner."
-    ->DONE
+    ->Done
 *"Welp[."], I guess I don't get to see bill before I leave. Back to the commisioner it is."
-    ->DONE
-ner it is."
-    ->DONE
+    ->Done
 
+===Done
+
+Welp!
 
 ->DONE

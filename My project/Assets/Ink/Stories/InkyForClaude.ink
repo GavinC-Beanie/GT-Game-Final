@@ -22,7 +22,6 @@ INCLUDE characters/2ndCrank.ink
 INCLUDE characters/2ndPump.ink
 INCLUDE characters/grom.ink
 INCLUDE characters/3rdBill.ink
-INCLUDE characters/2ndCom.ink
 INCLUDE characters/gram.ink
 INCLUDE characters/derpy.ink
 
