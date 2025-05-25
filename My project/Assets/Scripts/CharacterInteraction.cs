@@ -45,7 +45,7 @@ public class CharacterInteraction : MonoBehaviour
 
 
         if (player == null)
-            Debug.LogError("Player not found — make sure they have the 'Player' tag.");
+            Debug.LogError("Player not found ï¿½ make sure they have the 'Player' tag.");
 
         if (interactionPrompt)
             interactionPrompt.SetActive(false);
@@ -61,7 +61,7 @@ public class CharacterInteraction : MonoBehaviour
         {
             if (distance > dialogueEndDistance)
             {
-                Debug.Log($"{characterName} — Player moved too far. Ending dialogue.");
+                Debug.Log($"{characterName} ï¿½ Player moved too far. Ending dialogue.");
                 EndInteraction();
             }
         }
@@ -91,7 +91,7 @@ public class CharacterInteraction : MonoBehaviour
         dialogueManager.DisplayCharacterName(gameObject);
         dialogueManager.StartDialogueFromKnot(characterKnot);
 
-        Debug.Log($"{characterName} — Dialogue started at knot: {characterKnot}");
+        Debug.Log($"{characterName} ï¿½ Dialogue started at knot: {characterKnot}");
 
         if (!hasBeenMet)
         {
