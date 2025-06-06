@@ -95,7 +95,8 @@ public class CharacterInteraction : MonoBehaviour
 
         if (!hasBeenMet)
         {
-            StoryStateManager.Instance?.OnCharacterMet(characterName);
+            Debug.Log("Sent to OnCharacterMet " +characterName);
+            StoryStateManager.Instance.OnCharacterMet(characterName);
             hasBeenMet = true;
         }
     }
@@ -105,12 +106,10 @@ public class CharacterInteraction : MonoBehaviour
         inDialogue = false;
         dialogueManager.EndDialogue();
         ShowPrompt(false);
+        Debug.Log("Bye Bitches");
     }
 
-    public void DialogueEnded()
-    {
-        inDialogue = false;
-    }
+
 
     private void ShowPrompt(bool show)
     {

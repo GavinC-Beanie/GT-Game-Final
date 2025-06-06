@@ -27,7 +27,7 @@ public class CharacterManager : MonoBehaviour
     // Tracks currently spawned characters
     private Dictionary<string, GameObject> spawnedCharacters = new Dictionary<string, GameObject>();
 
-    public event System.Action OnCharactersSpawned;
+    //public event System.Action OnCharactersSpawned;
     public bool AreCharactersSpawned { get; private set; } = false;
 
     void Awake()
@@ -65,24 +65,33 @@ public class CharacterManager : MonoBehaviour
             {
                 Debug.Log("DialogueManager found!");
             }
+            Debug.Log("CharacterManager Start() fired!");
+
+
         }
+
     }
 
     void Start()
     {
-        Debug.Log("CharacterManager Start() fired!");
-        // Spawn everyone off-screen (disabled) first so visibility can be toggled
+        Debug.Log("Character Manager Start!!!");
+
+        // UNCOMMENT THIS - You need to spawn characters first!
         SpawnAllCharactersDisabled();
-
         AreCharactersSpawned = true;
-        OnCharactersSpawned?.Invoke();
 
-        if (StoryStateManager.Instance != null)
+        // THEN set up their visibility
+        if (storyStateManager != null)
         {
-            StoryStateManager.Instance.ProcessPendingVisibilityChanges();
+            storyStateManager.upanddown();
+        }
+        else
+        {
+            Debug.LogError("Cannot call upanddown - storyStateManager is null!");
         }
     }
 
+    // UNCOMMENT this entire method:
     private void SpawnAllCharactersDisabled()
     {
         foreach (var character in characterPrefabs)
@@ -168,26 +177,38 @@ public class CharacterManager : MonoBehaviour
 
     public void HideCharacter(string characterName)
     {
+        Debug.Log($"HideCharacter called for: {characterName}");
         GameObject character = GetCharacter(characterName);
         if (character != null)
         {
+            Debug.Log($"Found character {characterName}, setting to inactive");
             character.SetActive(false);
+            Debug.Log($"Character {characterName} is now active: {character.activeSelf}");
+        }
+        else
+        {
+            Debug.LogError($"Character {characterName} not found in spawnedCharacters!");
+
+            
         }
     }
-
-    
 
     public void ShowCharacter(string characterName)
     {
+        Debug.Log($"ShowCharacter called for: {characterName}");
+
         GameObject character = GetCharacter(characterName);
-        if (character != null)
+        if (character)
         {
+            Debug.Log($"Found character {characterName}, setting to active");
             character.SetActive(true);
+            Debug.Log($"Character {characterName} is now active: {character.activeSelf}");
+        }
+        else
+        {
+            Debug.LogError($"Character {characterName} not found in spawnedCharacters!");
         }
     }
 
-    public bool IsCharacterSpawned(string characterName)
-    {
-        return spawnedCharacters.ContainsKey(characterName);
-    }
 }
+    

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Ink.Runtime;
+using System.Collections;
 using Unity.VisualScripting;  // Ensure you have the Ink runtime imported to use Ink.Runtime.Story
 
 public class StoryStateManager : MonoBehaviour
@@ -11,9 +12,9 @@ public class StoryStateManager : MonoBehaviour
     private Dictionary<string, bool> characterVisibility = new Dictionary<string, bool>();
 
     // Define story phase states
-    public enum StoryPhase { Start, FirstQuestActive, SecondQuestActive, ThirdQuestActive }
+   
 
-    [SerializeField] private StoryPhase currentPhase = StoryPhase.Start;
+   
 
     // Assign these references in the Unity Inspector to the corresponding character GameObjects
     public GameObject The_Commisioner;
@@ -36,76 +37,82 @@ public class StoryStateManager : MonoBehaviour
     private bool firstQuestComMet, firstQuestBillMet, firstQuestPumpMet, firstQuestCrankMet, firstQuestGobsterMet, firstQuestGramMet;
     private bool secondQuestBillMet, secondQuestCrankMet, secondQuestDerpyMet, secondQuestPumpMet, secondQuestGromblarMet;
     private bool thirdQuestBillMet, thirdQuestComMet;
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+
+        
+        Debug.Log("Wow");
+    }
     void Start()
     {
-        // Begin in the Start phase (The_Commisioner only)
-        currentPhase = StoryPhase.Start;
+        Debug.Log("Where in line are we");
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
 
+
+    }
+
+    public void upanddown()  
+    {
+        ApplyAllCharacters();
         HideAllCharacters();
+    }
 
-        // Show only the The_Commisioner
-        
-
-        UpdateVisibilityForPhase();
+    private void ApplyAllCharacters()
+    {
+        Debug.Log("Yo they here");
+        if (The_Commisioner) ApplyCharacterVisibility("The_Commisioner", true);
+        if (Bill) ApplyCharacterVisibility("Bill", true);
+        if (Bill_the_Drawggin) ApplyCharacterVisibility("Bill_the_Drawggin", true);
+        if (Pumplscroob) ApplyCharacterVisibility("Pumplscroob", true);
+        if (The_Crank) ApplyCharacterVisibility("The_Crank", true);
+        if (Gobster) ApplyCharacterVisibility("Gobster", true);
+        if (Grandma_Gob) ApplyCharacterVisibility("Grandma_Gob", true);
+        if (Derpy_Unicorn_Buttponey) ApplyCharacterVisibility("Derpy_Unicorn_Buttponey", true);
+        if (Gromblar) ApplyCharacterVisibility("Gromblar", true);
+        if (Wheres_Bill) ApplyCharacterVisibility("Wheres_Bill", true);
+        if (Tent_Dweller) ApplyCharacterVisibility("Tent_Dweller", true);
+        if (Grandpa) ApplyCharacterVisibility("Grandpa", true);
     }
 
     /// <summary>Hide all character GameObjects.</summary>
     private void HideAllCharacters()
     {
-        if (The_Commisioner) The_Commisioner.SetActive(false);
-        if (Bill) Bill.SetActive(false);
-        if (Bill_the_Drawggin) Bill_the_Drawggin.SetActive(false);
-        if (Pumplscroob) Pumplscroob.SetActive(false);
-        if (The_Crank) The_Crank.SetActive(false);
-        if (Gobster) Gobster.SetActive(false);
-        if (Grandma_Gob) Grandma_Gob.SetActive(false);
-        if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);
-        if (Gromblar) Gromblar.SetActive(false);
-        if (Wheres_Bill) Wheres_Bill.SetActive(false);
-        if (Tent_Dweller) Tent_Dweller.SetActive(false);
-        if (Grandpa) Grandpa.SetActive(false);
+        if (Bill) ApplyCharacterVisibility("Bill", false);
+        if (Bill_the_Drawggin) ApplyCharacterVisibility("Bill_the_Drawggin", false);
+        if (Pumplscroob) ApplyCharacterVisibility("Pumplscroob", false);
+        if (The_Crank) ApplyCharacterVisibility("The_Crank", false);
+        if (Gobster) ApplyCharacterVisibility("Gobster", false);
+        if (Grandma_Gob) ApplyCharacterVisibility("Grandma_Gob", false);
+        if (Derpy_Unicorn_Buttponey) ApplyCharacterVisibility("Derpy_Unicorn_Buttponey", false);
+        if (Gromblar) ApplyCharacterVisibility("Gromblar", false);
+        if (Wheres_Bill) ApplyCharacterVisibility("Wheres_Bill", false);
+        if (Tent_Dweller) ApplyCharacterVisibility("Tent_Dweller", false);
+        if (Grandpa) ApplyCharacterVisibility("Grandpa", false);
     }
 
-
-
-
-
-    /// <summary>Show/hide characters based on the current story phase.</summary>
-    private void UpdateVisibilityForPhase()
+    private void HideAllCharactersAgain()
     {
-        Debug.Log("updating visiblity");
-        
-        Debug.Log("CURRENT PHASE: " + currentPhase);
-        switch (currentPhase)
-        {
-            case StoryPhase.Start:
-                Debug.Log("PHASE START");
-                // First Quest begins: show Bill, Pump, Crank, Gobster. (Gram appears later when conditions met)
-                if (The_Commisioner) The_Commisioner.SetActive(true);
-                {
-                Debug.Log("The Com set true");
-        }
-                
-                if (Bill) Bill.SetActive(false);
-                if (Pumplscroob) Pumplscroob.SetActive(false);
-                if (The_Crank) The_Crank.SetActive(false);
-                if (Gobster) Gobster.SetActive(false);
-                if (Grandma_Gob) Grandma_Gob.SetActive(false);  // Gram starts hidden
-                // Commissioner is presumably gone during the quest.
-                break;
-
-            case StoryPhase.SecondQuestActive:
-                // Second Quest begins: initially only Bill is active (others come later in sequence).
-                if (Bill) Bill.SetActive(true);
-                // Crank, Derpy, Pump, Gromblar remain hidden until their turn in the sequence.
-                break;
-
-            case StoryPhase.ThirdQuestActive:
-                // Third Quest begins: no previous characters should remain.
-                // (Activate any new third quest characters here if applicable; none specified in this scenario.)
-                if (Wheres_Bill) Wheres_Bill.SetActive(true);
-                break;
-        }
+        if (The_Commisioner) ApplyCharacterVisibility("The_Commisioner", false);
+        if (Bill) ApplyCharacterVisibility("Bill", false);
+        if (Bill_the_Drawggin) ApplyCharacterVisibility("Bill_the_Drawggin", false);
+        if (Pumplscroob) ApplyCharacterVisibility("Pumplscroob", false);
+        if (The_Crank) ApplyCharacterVisibility("The_Crank", false);
+        if (Gobster) ApplyCharacterVisibility("Gobster", false);
+        if (Grandma_Gob) ApplyCharacterVisibility("Grandma_Gob", false);
+        if (Derpy_Unicorn_Buttponey) ApplyCharacterVisibility("Derpy_Unicorn_Buttponey", false);
+        if (Gromblar) ApplyCharacterVisibility("Gromblar", false);
+        if (Wheres_Bill) ApplyCharacterVisibility("Wheres_Bill", false);
+        if (Tent_Dweller) ApplyCharacterVisibility("Tent_Dweller", false);
+        if (Grandpa) ApplyCharacterVisibility("Grandpa", false);
     }
 
     /// <summary>Transition from Start phase to First Quest.</summary>
@@ -114,13 +121,13 @@ public class StoryStateManager : MonoBehaviour
     /// <summary>Transition from First Quest to Second Quest (called after Gram is interacted with).</summary>
     public void StartSecondQuest()
     {
-        currentPhase = StoryPhase.SecondQuestActive;
+    
         // Despawn all characters from first quest
-        HideAllCharacters();
+        HideAllCharactersAgain();
         // Reset second quest flags
         secondQuestBillMet = secondQuestCrankMet = secondQuestDerpyMet = secondQuestPumpMet = secondQuestGromblarMet = false;
         // Activate the first NPC for second quest (Bill)
-        if (Bill) Bill.SetActive(true);
+        if (Bill) UpdateCharacterVisibility("Bill", true);
         if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("secondQuestStarted"))
         {
             inkStory.variablesState["secondQuestStarted"] = true;
@@ -130,13 +137,10 @@ public class StoryStateManager : MonoBehaviour
     /// <summary>Transition from Second Quest to Third Quest.</summary>
     public void StartThirdQuest()
     {
-        currentPhase = StoryPhase.ThirdQuestActive;
+        
         // Despawn all remaining characters from second quest
-        HideAllCharacters();
-        if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("thirdQuestStarted"))
-        {
-            inkStory.variablesState["thirdQuestStarted"] = true;
-        }
+        HideAllCharactersAgain();
+        if (Wheres_Bill) UpdateCharacterVisibility("Wheres_Bill", true);
         // (If third quest has its own characters, they can be enabled here.)
     }
 
@@ -151,211 +155,267 @@ public class StoryStateManager : MonoBehaviour
         public bool isVisible;
     }
 
-    private void ApplyCharacterVisibility(string characterName, bool isVisible)
-    {
-        characterVisibility[characterName] = isVisible;
-
-        if (!CharacterManager.Instance) return;
-
-        if (isVisible)
-        {
-            CharacterManager.Instance.ShowCharacter(characterName);
-        }
-        else
-        {
-            CharacterManager.Instance.HideCharacter(characterName);
-        }
-    }
 
     public void UpdateCharacterVisibility(string characterName, bool isVisible)
     {
+        
         if (DialogueManager.isDialogueActive)
         {
+            Debug.Log(characterName + " was sent to list");
             pendingVisibilityChanges.Enqueue(new CharacterVisibilityChange
             {
                 characterName = characterName,
-                isVisible = isVisible
+                isVisible = isVisible,
+               
             });
         }
         else
         {
+            Debug.Log(characterName + " was Applied");
             ApplyCharacterVisibility(characterName, isVisible);
         }
     }
 
     public void ProcessPendingVisibilityChanges()
     {
+        Debug.Log("Starting ProcessPendingVisibilityChanges. Queue count: " + pendingVisibilityChanges.Count);
+
+        int processedCount = 0;
         while (pendingVisibilityChanges.Count > 0)
         {
             var change = pendingVisibilityChanges.Dequeue();
+            processedCount++;
+
+            Debug.Log($"Processing #{processedCount}: {change.characterName} -> {(change.isVisible ? "SHOW" : "HIDE")}");
+
             ApplyCharacterVisibility(change.characterName, change.isVisible);
+
+            Debug.Log($"Remaining in queue: {pendingVisibilityChanges.Count}");
         }
+
+        Debug.Log($"Finished processing. Total processed: {processedCount}");
+    }
+
+    // Also update ApplyCharacterVisibility to show what actually happens:
+    private void ApplyCharacterVisibility(string characterName, bool isVisible)
+    {
+        Debug.Log($"ApplyCharacterVisibility called: {characterName} -> {(isVisible ? "SHOW" : "HIDE")}");
+
+        characterVisibility[characterName] = isVisible;
+
+        if (!CharacterManager.Instance)
+        {
+            Debug.LogError("CharacterManager.Instance is null!");
+            return;
+        }
+
+        if (isVisible)
+        {
+            Debug.Log($"Calling ShowCharacter for: {characterName}");
+            CharacterManager.Instance.ShowCharacter(characterName);
+        }
+        else
+        {
+            Debug.Log($"Calling HideCharacter for: {characterName}");
+            CharacterManager.Instance.HideCharacter(characterName);
+        }
+
+        Debug.Log($"ApplyCharacterVisibility completed for: {characterName}");
     }
 
 
 
-    /// <summary>
-    /// Call this when the player has met/interacted with a character. 
-    /// It updates the state and triggers any necessary visibility or phase changes.
-    /// </summary>
+        //if (The_Commisioner) UpdateCharacterVisibility("The_Commisioner", false);
+        //if (Bill) UpdateCharacterVisibility("Bill", false);
+        //if (Bill_the_Drawggin) UpdateCharacterVisibility("Bill_the_Drawggin", false);
+        //if (Pumplscroob) UpdateCharacterVisibility("Pumplscroob", false);
+        //if (The_Crank) UpdateCharacterVisibility("The_Crank", false);
+        //if (Gobster) UpdateCharacterVisibility("Gobster", false);
+        //if (Grandma_Gob) UpdateCharacterVisibility("Grandma_Gob", false);
+        //if (Derpy_Unicorn_Buttponey) UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", false);
+        //if (Gromblar) UpdateCharacterVisibility("Gromblarl", false);
+        //if (Wheres_Bill) UpdateCharacterVisibility("Wheres_Bill", false);
+        //if (Tent_Dweller) UpdateCharacterVisibility("Tent_Dweller", false);
+        //if (Grandpa) UpdateCharacterVisibility("Grandpa", false);
+
     public void OnCharacterMet(string characterName)
     {
-        string nameKey = characterName.ToLower();  // handle name case-insensitively
+        string nameKey = characterName.ToLower();
+        // handle name case-insensitively
+        Debug.Log("Chater Name passed " + characterName);
         switch (nameKey)
         {
-            case "commisioner":
-                if (currentPhase == StoryPhase.FirstQuestActive)
-                {
+           
+            case "the commisioner":
+                Debug.Log("Commision case hit");
+
+{
                     firstQuestComMet = true;
-                    if (The_Commisioner) The_Commisioner.SetActive(false);
+                    UpdateCharacterVisibility("The_Commisioner", false);
 
-                    if (Bill_the_Drawggin) Bill_the_Drawggin.SetActive(true);
-                    if (Pumplscroob) Pumplscroob.SetActive(true);
-                    if (The_Crank) The_Crank.SetActive(true);
-                    if (Gobster) Gobster.SetActive(true);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_com"))
+                    {
+                        inkStory.variablesState["met_com"] = true;
+                  
+                        Debug.Log("Variable Hit!!!");
+                    }
 
+                    
+
+                    UpdateCharacterVisibility("Bill_the_Drawggin", true);
+                    UpdateCharacterVisibility("Pumplscroob", true);
+                    UpdateCharacterVisibility("The_Crank", true);
+                    UpdateCharacterVisibility("Gobster", true);
 
                 }
                 break;
 
-            case "bill":
-                if (currentPhase == StoryPhase.FirstQuestActive)
+            case "bill the drawggin'":
+               
                 {
                     firstQuestBillMet = true;
-                    if (Bill) Bill.SetActive(false);  // hide Bill after meeting him
-                    // If Bill **and** Crank are met, reveal Gram for the next step.
-                    if (Grandma_Gob && firstQuestCrankMet && !Grandma_Gob.activeSelf)
+                    UpdateCharacterVisibility("Bill_the_Drawggin", false);
+
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_bill"))
                     {
-                        Grandma_Gob.SetActive(true);
-                    }
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("billMet"))
-                    {
-                        inkStory.variablesState["billMet"] = true;
-                    }
-                }
-                else if (currentPhase == StoryPhase.SecondQuestActive)
-                {
-                    secondQuestBillMet = true;
-                    if (Bill) Bill.SetActive(false);
-                    // After finishing Bill in second quest, activate Crank and Derpy.
-                    if (The_Crank) The_Crank.SetActive(true);
-                    if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(true);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("bill2Met"))
-                    {
-                        inkStory.variablesState["bill2Met"] = true;
+                        inkStory.variablesState["met_bill"] = true;
                     }
                 }
                 break;
 
+            
             case "pump":
-                if (currentPhase == StoryPhase.FirstQuestActive)
+              
                 {
                     firstQuestPumpMet = true;
-                    if (Pumplscroob) Pumplscroob.SetActive(false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("pumpMet"))
+                    UpdateCharacterVisibility("Pumplscroob", false);
+                    
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_pump"))
                     {
-                        inkStory.variablesState["pumpMet"] = true;
+                        inkStory.variablesState["met_pump"] = true;
                     }
                 }
-                else if (currentPhase == StoryPhase.SecondQuestActive)
-                {
-                    secondQuestPumpMet = true;
-                    if (Pumplscroob) Pumplscroob.SetActive(false);
-                    // After Pump in second quest, show Gromblar.
-                    if (Gromblar) Gromblar.SetActive(true);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("pump2Met"))
-                    {
-                        inkStory.variablesState["pump2Met"] = true;
-                    }
-                }
+               
                 break;
 
-            case "crank":
-                if (currentPhase == StoryPhase.FirstQuestActive)
+            case "the crank":
+             
                 {
                     firstQuestCrankMet = true;
-                    if (The_Crank) The_Crank.SetActive(false);
+                    UpdateCharacterVisibility("The_Crank", false);
                     // If Crank **and** Bill are met, reveal Gram.
-                    if (Grandma_Gob && firstQuestBillMet && !Grandma_Gob.activeSelf)
+                    UpdateCharacterVisibility("Grandma_Gob", true);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_crank"))
                     {
-                        Grandma_Gob.SetActive(true);
-                    }
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("crankMet"))
-                    {
-                        inkStory.variablesState["crankMet"] = true;
+                        inkStory.variablesState["met_crank"] = true;
                     }
                 }
-                else if (currentPhase == StoryPhase.SecondQuestActive)
-                {
-                    secondQuestCrankMet = true;
-                    if (The_Crank) The_Crank.SetActive(false);
-                    // If Crank and Derpy are both done in second quest, move to Pump.
-                    if (secondQuestDerpyMet)
-                    {
-                        // Both NPCs in this stage are met, proceed to Pump.
-                        if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);  // (Derpy would already be inactive if interacted with)
-                        if (Pumplscroob) Pumplscroob.SetActive(true);
-                    }
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("crank2Met"))
-                    {
-                        inkStory.variablesState["crank2Met"] = true;
-                    }
-                }
+               
                 break;
 
             case "gobster":
-                if (currentPhase == StoryPhase.FirstQuestActive)
+          
                 {
                     firstQuestGobsterMet = true;
-                    if (Gobster) Gobster.SetActive(false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("gobsterMet"))
+                    UpdateCharacterVisibility("Gobster", false);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_gobster"))
                     {
-                        inkStory.variablesState["gobsterMet"] = true;
+                        inkStory.variablesState["met_gobster"] = true;
                     }
                 }
                 // Gobster is not part of second quest, so no case for SecondQuestActive.
                 break;
 
             case "gram":
-                if (currentPhase == StoryPhase.FirstQuestActive)
+         
                 {
                     firstQuestGramMet = true;
-                    if (Grandma_Gob) Grandma_Gob.SetActive(false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("gramMet"))
+                    UpdateCharacterVisibility("Grandma_Gob", false);
+                    UpdateCharacterVisibility("Pumplscroob", false);
+                    UpdateCharacterVisibility("Gobster", false);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_gram"))
                     {
-                        inkStory.variablesState["gramMet"] = true;
+                        inkStory.variablesState["met_gram"] = true;
                     }
                     // Gram being asked marks end of first quest -> begin second quest.
                     StartSecondQuest();
                 }
                 break;
 
-            case "derpy":
-                if (currentPhase == StoryPhase.SecondQuestActive)
+            case "bill":
+         
                 {
-                    secondQuestDerpyMet = true;
-                    if (Derpy_Unicorn_Buttponey) Derpy_Unicorn_Buttponey.SetActive(false);
-                    // If Derpy and Crank are now both met, proceed to Pump.
-                    if (secondQuestCrankMet)
+                    secondQuestBillMet = true;
+                    UpdateCharacterVisibility("Bill", false);
+
+                    UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", true);
+                    UpdateCharacterVisibility("Grandpa", true);
+
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_2ndBill"))
                     {
-                        if (Pumplscroob) Pumplscroob.SetActive(true);
-                    }
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("derpyMet"))
-                    {
-                        inkStory.variablesState["derpyMet"] = true;
+                        inkStory.variablesState["met_2ndBill"] = true;
                     }
                 }
-                // Derpy isn't present in first quest.
+                
+                break;
+
+            case "grandpa!":
+  
+                {
+                    secondQuestCrankMet = true;
+                    UpdateCharacterVisibility("Grandpa", false);
+
+                    UpdateCharacterVisibility("Tent_Dweller", true);
+
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_2ndCrank"))
+                    {
+                        inkStory.variablesState["met_2ndCrank"] = true;
+                    }
+                }
+
+                break;
+
+            case "derpy":
+       
+                {
+                    secondQuestDerpyMet = true;
+                    UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", false);
+                    
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_derpy"))
+                    {
+                        inkStory.variablesState["met_derpy"] = true;
+                    }
+                    if (secondQuestGromblarMet)
+                    {
+                        StartThirdQuest();
+                    }
+                }
+                
+                break;
+
+            case "tent dweller":
+
+                {
+                    secondQuestPumpMet = true;
+                    UpdateCharacterVisibility("Tent_Dweller", true);
+
+                    UpdateCharacterVisibility("Gromblar", true);
+
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_2ndPump"))
+                    {
+                        inkStory.variablesState["met_2ndPump"] = true;
+                    }
+                }
+
                 break;
 
             case "gromblar":
-                if (currentPhase == StoryPhase.SecondQuestActive)
                 {
                     secondQuestGromblarMet = true;
-                    if (Gromblar) Gromblar.SetActive(false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("gromblarMet"))
+                    UpdateCharacterVisibility("Gromblar", false);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_gromblar"))
                     {
-                        inkStory.variablesState["gromblarMet"] = true;
+                        inkStory.variablesState["met_gromblar"] = true;
                     }
                     // After Gromblar is met (and Derpy should be met by now), transition to third quest.
                     if (secondQuestDerpyMet)
@@ -367,16 +427,19 @@ public class StoryStateManager : MonoBehaviour
                 break;
 
             case "where's bill":
-                if (currentPhase == StoryPhase.ThirdQuestActive)
+         
                 {
                     thirdQuestBillMet = true;
-                    if (Wheres_Bill) Wheres_Bill.SetActive(false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("bill3Met"))
+                    UpdateCharacterVisibility("Wheres_Bill", false);
+                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_3rdBill"))
                     {
-                        inkStory.variablesState["bill3Met"] = true;
+                        inkStory.variablesState["met_3rdBill"] = true;
                     }
                 }
-                // Gobster is not part of second quest, so no case for SecondQuestActive.
+                break;
+
+            default:
+                Debug.Log("default for " + nameKey);
                 break;
 
         }
@@ -393,24 +456,31 @@ public class StoryStateManager : MonoBehaviour
             case "the commisioner":
                 The_Commisioner = characterObject;
                 break;
+
             case "bill":
                 Bill = characterObject;
                 break;
+
             case "pumplscroob":
                 Pumplscroob = characterObject;
                 break;
+
             case "the crank":
                 The_Crank = characterObject;
                 break;
+
             case "gobster":
                 Gobster = characterObject;
                 break;
+
             case "grandma gob":
                 Grandma_Gob = characterObject;
                 break;
+
             case "derpy unicorn buttponey":
                 Derpy_Unicorn_Buttponey = characterObject;
                 break;
+
             case "gromblar":
                 Gromblar = characterObject;
                 break;
@@ -418,15 +488,19 @@ public class StoryStateManager : MonoBehaviour
             case "bill the drawggin'":
                 Bill_the_Drawggin = characterObject;
                 break;
+
             case "where's bill":
                 Wheres_Bill = characterObject;
                 break;
+
             case "grandpa!":
                 Grandpa = characterObject;
                 break;
+
             case "tent dweller":
                 Tent_Dweller = characterObject;
                 break;
+
             default:
                 Debug.LogWarning($"Character ({nameKey}) not recognized in StoryStateManager.");
                 break;

@@ -3,11 +3,23 @@ using Ink.Runtime;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
+
+//[System.Serializable]
+//public class groupItem
+//{
+//    public NameTextScript CharacterInfo;
+//    public string Name;
+//    public void fuck()
+//        { CharacterInfo.name = Name; }
+
+//}
 
 public class DialogueManager : MonoBehaviour
 {
     public TextAsset inkJSON;
     private Story story;
+    //public List<groupItem> items = new List<groupItem>();
 
     public GameObject dialoguePanel;
     public TMP_Text nameText;
@@ -36,12 +48,14 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.LogWarning("No StoryStateManager found in scene.");
         }
+        //items.First().fuck();
     }
 
     void Start()
     {
         dialoguePanel.SetActive(false);
         story = new Story(inkJSON.text);
+
     }
 
     public void StartDialogueFromKnot(string knotName)
@@ -203,23 +217,6 @@ public class DialogueManager : MonoBehaviour
         if (storyManager != null)
             storyManager.ProcessPendingVisibilityChanges();
 
-        // Let characters know dialogue is done
-        CharacterInteraction[] characters = FindObjectsOfType<CharacterInteraction>();
-        foreach (var c in characters)
-        {
-            c.DialogueEnded();
-        }
-    }
 
-    // Optional utility to get/set Ink vars if you need it
-    public object GetStoryVariable(string varName)
-    {
-        return story?.variablesState[varName];
-    }
-
-    public void SetStoryVariable(string varName, object value)
-    {
-        if (story != null)
-            story.variablesState[varName] = value;
     }
 }
