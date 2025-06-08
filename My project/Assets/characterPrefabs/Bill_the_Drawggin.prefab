@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Bill
-  characterName: Bill the Drawggin'
+  characterName: Bill_the_Drawggin
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}

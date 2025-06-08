@@ -60,45 +60,16 @@ public class StoryStateManager : MonoBehaviour
 
     }
 
-    public void upanddown()  
-    {
-        ApplyAllCharacters();
-        HideAllCharacters();
-    }
+    
 
-    private void ApplyAllCharacters()
+    public void ApplyAllCharacters()
     {
         Debug.Log("Yo they here");
         if (The_Commisioner) ApplyCharacterVisibility("The_Commisioner", true);
-        if (Bill) ApplyCharacterVisibility("Bill", true);
-        if (Bill_the_Drawggin) ApplyCharacterVisibility("Bill_the_Drawggin", true);
-        if (Pumplscroob) ApplyCharacterVisibility("Pumplscroob", true);
-        if (The_Crank) ApplyCharacterVisibility("The_Crank", true);
-        if (Gobster) ApplyCharacterVisibility("Gobster", true);
-        if (Grandma_Gob) ApplyCharacterVisibility("Grandma_Gob", true);
-        if (Derpy_Unicorn_Buttponey) ApplyCharacterVisibility("Derpy_Unicorn_Buttponey", true);
-        if (Gromblar) ApplyCharacterVisibility("Gromblar", true);
-        if (Wheres_Bill) ApplyCharacterVisibility("Wheres_Bill", true);
-        if (Tent_Dweller) ApplyCharacterVisibility("Tent_Dweller", true);
-        if (Grandpa) ApplyCharacterVisibility("Grandpa", true);
+        
     }
 
-    /// <summary>Hide all character GameObjects.</summary>
-    private void HideAllCharacters()
-    {
-        if (Bill) ApplyCharacterVisibility("Bill", false);
-        if (Bill_the_Drawggin) ApplyCharacterVisibility("Bill_the_Drawggin", false);
-        if (Pumplscroob) ApplyCharacterVisibility("Pumplscroob", false);
-        if (The_Crank) ApplyCharacterVisibility("The_Crank", false);
-        if (Gobster) ApplyCharacterVisibility("Gobster", false);
-        if (Grandma_Gob) ApplyCharacterVisibility("Grandma_Gob", false);
-        if (Derpy_Unicorn_Buttponey) ApplyCharacterVisibility("Derpy_Unicorn_Buttponey", false);
-        if (Gromblar) ApplyCharacterVisibility("Gromblar", false);
-        if (Wheres_Bill) ApplyCharacterVisibility("Wheres_Bill", false);
-        if (Tent_Dweller) ApplyCharacterVisibility("Tent_Dweller", false);
-        if (Grandpa) ApplyCharacterVisibility("Grandpa", false);
-    }
-
+    
     private void HideAllCharactersAgain()
     {
         if (The_Commisioner) ApplyCharacterVisibility("The_Commisioner", false);
@@ -112,7 +83,7 @@ public class StoryStateManager : MonoBehaviour
         if (Gromblar) ApplyCharacterVisibility("Gromblar", false);
         if (Wheres_Bill) ApplyCharacterVisibility("Wheres_Bill", false);
         if (Tent_Dweller) ApplyCharacterVisibility("Tent_Dweller", false);
-        if (Grandpa) ApplyCharacterVisibility("Grandpa", false);
+        if (Grandpa) ApplyCharacterVisibility("Grandpa!", false);
     }
 
     /// <summary>Transition from Start phase to First Quest.</summary>
@@ -225,18 +196,6 @@ public class StoryStateManager : MonoBehaviour
 
 
 
-        //if (The_Commisioner) UpdateCharacterVisibility("The_Commisioner", false);
-        //if (Bill) UpdateCharacterVisibility("Bill", false);
-        //if (Bill_the_Drawggin) UpdateCharacterVisibility("Bill_the_Drawggin", false);
-        //if (Pumplscroob) UpdateCharacterVisibility("Pumplscroob", false);
-        //if (The_Crank) UpdateCharacterVisibility("The_Crank", false);
-        //if (Gobster) UpdateCharacterVisibility("Gobster", false);
-        //if (Grandma_Gob) UpdateCharacterVisibility("Grandma_Gob", false);
-        //if (Derpy_Unicorn_Buttponey) UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", false);
-        //if (Gromblar) UpdateCharacterVisibility("Gromblarl", false);
-        //if (Wheres_Bill) UpdateCharacterVisibility("Wheres_Bill", false);
-        //if (Tent_Dweller) UpdateCharacterVisibility("Tent_Dweller", false);
-        //if (Grandpa) UpdateCharacterVisibility("Grandpa", false);
 
     public void OnCharacterMet(string characterName)
     {
@@ -246,31 +205,40 @@ public class StoryStateManager : MonoBehaviour
         switch (nameKey)
         {
            
-            case "the commisioner":
-                Debug.Log("Commision case hit");
+            case "the_commisioner":
+                Debug.Log("Commision intraction ending");
 
 {
                     firstQuestComMet = true;
-                    UpdateCharacterVisibility("The_Commisioner", false);
-
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_com"))
-                    {
-                        inkStory.variablesState["met_com"] = true;
-                  
-                        Debug.Log("Variable Hit!!!");
-                    }
-
                     
 
-                    UpdateCharacterVisibility("Bill_the_Drawggin", true);
-                    UpdateCharacterVisibility("Pumplscroob", true);
-                    UpdateCharacterVisibility("The_Crank", true);
-                    UpdateCharacterVisibility("Gobster", true);
+                    if (inkStory != null && (bool)inkStory.variablesState["met_com"] == true)
+                    {
+                   
+                        inkStory.variablesState["met_com"] = true;
+                        Debug.Log("Variable Hit!!!");
+
+                        UpdateCharacterVisibility("The_Commisioner", false);
+                        Debug.Log("Com Uptaded to false");
+
+                        UpdateCharacterVisibility("Bill_the_Drawggin", true);
+                        UpdateCharacterVisibility("Pumplscroob", true);
+                        UpdateCharacterVisibility("The_Crank", true);
+                        UpdateCharacterVisibility("Gobster", true);
+                    }
+
+
+
+
+                    //UpdateCharacterVisibility("Bill_the_Drawggin", true);
+                    //UpdateCharacterVisibility("Pumplscroob", true);
+                    //UpdateCharacterVisibility("The_Crank", true);
+                    //UpdateCharacterVisibility("Gobster", true);
 
                 }
                 break;
 
-            case "bill the drawggin'":
+            case "bill_the_drawggin":
                
                 {
                     firstQuestBillMet = true;
@@ -298,13 +266,17 @@ public class StoryStateManager : MonoBehaviour
                
                 break;
 
-            case "the crank":
+            case "the_crank":
              
                 {
                     firstQuestCrankMet = true;
                     UpdateCharacterVisibility("The_Crank", false);
                     // If Crank **and** Bill are met, reveal Gram.
+                   
                     UpdateCharacterVisibility("Grandma_Gob", true);
+
+
+
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_crank"))
                     {
                         inkStory.variablesState["met_crank"] = true;
@@ -349,7 +321,7 @@ public class StoryStateManager : MonoBehaviour
                     UpdateCharacterVisibility("Bill", false);
 
                     UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", true);
-                    UpdateCharacterVisibility("Grandpa", true);
+                    UpdateCharacterVisibility("Grandpa!", true);
 
                     if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_2ndBill"))
                     {
@@ -363,7 +335,7 @@ public class StoryStateManager : MonoBehaviour
   
                 {
                     secondQuestCrankMet = true;
-                    UpdateCharacterVisibility("Grandpa", false);
+                    UpdateCharacterVisibility("Grandpa!", false);
 
                     UpdateCharacterVisibility("Tent_Dweller", true);
 
@@ -375,7 +347,7 @@ public class StoryStateManager : MonoBehaviour
 
                 break;
 
-            case "derpy":
+            case "derpy_unicorn_buttponey":
        
                 {
                     secondQuestDerpyMet = true;
@@ -393,7 +365,7 @@ public class StoryStateManager : MonoBehaviour
                 
                 break;
 
-            case "tent dweller":
+            case "tent_dweller":
 
                 {
                     secondQuestPumpMet = true;
@@ -426,7 +398,7 @@ public class StoryStateManager : MonoBehaviour
                 }
                 break;
 
-            case "where's bill":
+            case "where's_bill":
          
                 {
                     thirdQuestBillMet = true;
@@ -453,7 +425,7 @@ public class StoryStateManager : MonoBehaviour
         switch (nameKey)
         {
 
-            case "the commisioner":
+            case "the_commisioner":
                 The_Commisioner = characterObject;
                 break;
 
@@ -465,7 +437,7 @@ public class StoryStateManager : MonoBehaviour
                 Pumplscroob = characterObject;
                 break;
 
-            case "the crank":
+            case "the_crank":
                 The_Crank = characterObject;
                 break;
 
@@ -473,11 +445,11 @@ public class StoryStateManager : MonoBehaviour
                 Gobster = characterObject;
                 break;
 
-            case "grandma gob":
+            case "grandma_gob":
                 Grandma_Gob = characterObject;
                 break;
 
-            case "derpy unicorn buttponey":
+            case "derpy_unicorn_buttponey":
                 Derpy_Unicorn_Buttponey = characterObject;
                 break;
 
@@ -485,11 +457,11 @@ public class StoryStateManager : MonoBehaviour
                 Gromblar = characterObject;
                 break;
         
-            case "bill the drawggin'":
+            case "bill_the_drawggin":
                 Bill_the_Drawggin = characterObject;
                 break;
 
-            case "where's bill":
+            case "where's_bill":
                 Wheres_Bill = characterObject;
                 break;
 
@@ -497,7 +469,7 @@ public class StoryStateManager : MonoBehaviour
                 Grandpa = characterObject;
                 break;
 
-            case "tent dweller":
+            case "tent_dweller":
                 Tent_Dweller = characterObject;
                 break;
 

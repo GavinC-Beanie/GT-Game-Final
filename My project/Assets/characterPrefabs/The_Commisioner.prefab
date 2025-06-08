@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Com
-  characterName: The Commisioner
+  characterName: The_Commisioner
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}

@@ -83,7 +83,7 @@ public class CharacterManager : MonoBehaviour
         // THEN set up their visibility
         if (storyStateManager != null)
         {
-            storyStateManager.upanddown();
+            storyStateManager.ApplyAllCharacters();
         }
         else
         {
@@ -91,7 +91,7 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    // UNCOMMENT this entire method:
+    
     private void SpawnAllCharactersDisabled()
     {
         foreach (var character in characterPrefabs)

@@ -4,17 +4,17 @@ public class CharacterInteraction : MonoBehaviour
 {
     [Header("Interaction Settings")]
     [SerializeField] private string characterKnot;              // Knot to start in Ink
-    [SerializeField] private string characterName;              // Name used in StoryStateManager
+    [SerializeField] public string characterName;              // Name used in StoryStateManager
     [SerializeField] private float interactionDistance = 3f;
     [SerializeField] private float dialogueEndDistance = 5f;
 
     [Header("References")]
-    [SerializeField] private DialogueManager dialogueManager;
-    [SerializeField] private GameObject interactionPrompt;
+    [SerializeField] public DialogueManager dialogueManager;
+    [SerializeField] public GameObject interactionPrompt;
 
     private Transform player;
     private bool inDialogue = false;
-    private bool hasBeenMet = false;
+
 
     // Public setters for the references
     public void SetDialogueManager(DialogueManager manager)
@@ -52,63 +52,89 @@ public class CharacterInteraction : MonoBehaviour
     }
 
     void Update()
+{
+    if (!player) 
     {
-        if (!player) return;
-
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        if (inDialogue)
+        Debug.LogError($"{characterName} - Player reference is null!");
+        return;
+    }
+    
+    float distance = Vector2.Distance(transform.position, player.position);
+    
+    
+    if (inDialogue)
+    {
+        
+        if (distance > dialogueEndDistance)
         {
-            if (distance > dialogueEndDistance)
+            Debug.Log($"{characterName} - Player moved too far ({distance:F2} > {dialogueEndDistance}). Ending dialogue.");
+            inDialogue = false;
+            Debug.Log($"{characterName} - Set inDialogue = false");
+            
+            if (dialogueManager != null)
             {
-                Debug.Log($"{characterName} � Player moved too far. Ending dialogue.");
-                EndInteraction();
-            }
-        }
-        else
-        {
-            if (distance <= interactionDistance)
-            {
-                ShowPrompt(true);
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    StartInteraction();
-                }
+                Debug.Log($"{characterName} - Calling dialogueManager.EndDialogue()");
+                dialogueManager.EndDialogue();
             }
             else
             {
-                ShowPrompt(false);
+                Debug.LogError($"{characterName} - dialogueManager is null!");
             }
         }
+        
     }
-
-    private void StartInteraction()
+    else
     {
-        if (inDialogue || dialogueManager == null) return;
-
-        inDialogue = true;
-        dialogueManager.DisplayCharacterName(gameObject);
-        dialogueManager.StartDialogueFromKnot(characterKnot);
-
-        Debug.Log($"{characterName} � Dialogue started at knot: {characterKnot}");
-
-        if (!hasBeenMet)
+        
+        if (distance <= interactionDistance)
         {
-            Debug.Log("Sent to OnCharacterMet " +characterName);
-            StoryStateManager.Instance.OnCharacterMet(characterName);
-            hasBeenMet = true;
+        
+            ShowPrompt(true);
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log($"{characterName} - E key pressed! Starting interaction.");
+                StartInteraction();
+            }
+          
+        }
+        else
+        {
+           
+            ShowPrompt(false);
         }
     }
+}
 
-    private void EndInteraction()
+    private void StartInteraction()
+{
+    Debug.Log($"{characterName} - StartInteraction() called");
+    
+    if (inDialogue)
     {
-        inDialogue = false;
-        dialogueManager.EndDialogue();
-        ShowPrompt(false);
-        Debug.Log("Bye Bitches");
+        Debug.LogWarning($"{characterName} - Already in dialogue, aborting StartInteraction");
+        return;
     }
-
+    
+    if (dialogueManager == null)
+    {
+        Debug.LogError($"{characterName} - dialogueManager is null, aborting StartInteraction");
+        return;
+    }
+    
+    Debug.Log($"{characterName} - Setting inDialogue = true");
+    inDialogue = true;
+    
+    Debug.Log($"{characterName} - Calling DisplayCharacterName with GameObject: {gameObject.name}");
+    dialogueManager.DisplayCharacterName(gameObject);
+    
+    Debug.Log($"{characterName} - Setting current character in DialogueManager FIRST");
+    dialogueManager.SetCurrentCharacter(characterName);  // ← MOVED THIS UP
+    
+    Debug.Log($"{characterName} - Starting dialogue from knot: {characterKnot}");
+    dialogueManager.StartDialogueFromKnot(characterKnot);  // ← This calls RefreshView()
+    
+}
 
 
     private void ShowPrompt(bool show)

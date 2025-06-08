@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Gram
-  characterName: Grandma Gob
+  characterName: Grandma_Gob
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}

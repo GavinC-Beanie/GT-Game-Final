@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: back_to_pump
-  characterName: Tent Dweller
+  characterName: Tent_Dweller
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}

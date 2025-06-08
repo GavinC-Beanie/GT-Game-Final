@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: back_back_to_bill
-  characterName: Where's Bill
+  characterName: Where's_Bill
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}

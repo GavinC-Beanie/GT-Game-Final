@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Crank
-  characterName: The Crank
+  characterName: The_Crank
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}

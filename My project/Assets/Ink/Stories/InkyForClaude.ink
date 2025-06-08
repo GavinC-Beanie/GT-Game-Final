@@ -12,6 +12,8 @@ VAR met_derpy = false
 VAR met_3rdBill = false
 
 
+
+
 INCLUDE characters/com.ink
 INCLUDE characters/bill.ink
 INCLUDE characters/crank.ink

@@ -5,16 +5,6 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-//[System.Serializable]
-//public class groupItem
-//{
-//    public NameTextScript CharacterInfo;
-//    public string Name;
-//    public void fuck()
-//        { CharacterInfo.name = Name; }
-
-//}
-
 public class DialogueManager : MonoBehaviour
 {
     public TextAsset inkJSON;
@@ -48,15 +38,23 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.LogWarning("No StoryStateManager found in scene.");
         }
-        //items.First().fuck();
+        
     }
+
+    private string currentCharacterName = "";
 
     void Start()
     {
+        Debug.Log("Where the fuck is this at huh");
         dialoguePanel.SetActive(false);
         story = new Story(inkJSON.text);
+        string text = story.Continue().Trim();
+
+
 
     }
+
+  
 
     public void StartDialogueFromKnot(string knotName)
     {
@@ -75,41 +73,140 @@ public class DialogueManager : MonoBehaviour
         RefreshView();
     }
 
+    public void SetCurrentCharacter(string characterName)
+    {
+        currentCharacterName = characterName;
+        Debug.Log($"Current character set to: {currentCharacterName}");
+    }
+
     void RefreshView()
     {
+        Debug.Log("RefreshView called");
+        Debug.Log($"story.canContinue: {story.canContinue}");
+        Debug.Log($"story.currentChoices.Count: {story.currentChoices.Count}");
+
         RemoveChildren(choicesPanel.transform);
 
+        // Check if dialogue should end FIRST, before anything else
         if (!story.canContinue && story.currentChoices.Count == 0)
         {
-            EndDialogue();
+            Debug.Log("No more content and no choices - ending dialogue");
+            Invoke("EndDialogue", 2f);
             return;
         }
 
+
+
+
+
+
+
         if (story.canContinue)
         {
+            Debug.Log("Can Continue 1");
+
             if (bottomBubble != null)
             {
+                Debug.Log("Moving previous bubble to top");
                 Destroy(topBubble);
                 topBubble = bottomBubble;
-
                 RectTransform rt = topBubble.GetComponent<RectTransform>();
                 if (rt != null)
                     rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, 150);
             }
 
+            Debug.Log("Can Continue 2");
+
+            
+    
+
+            // Check if prefab exists
+            if (npcBubblePrefab == null)
+            {
+                Debug.LogError("npcBubblePrefab is NULL! Assign it in the Inspector!");
+                return;
+            }
+            else
+            {
+                Debug.Log("npcBubblePrefab exists");
+            }
+
+            Debug.Log("Can Continue 3");
+
+            // Check if container exists
+            if (bubbleContainer == null)
+            {
+                Debug.LogError("bubbleContainer is NULL! Assign it in the Inspector!");
+                return;
+            }
+            else
+            {
+                Debug.Log($"bubbleContainer exists: {bubbleContainer.name}");
+            }
+
+            Debug.Log("About to instantiate bubble...");
+            bottomBubble = Instantiate(npcBubblePrefab, bubbleContainer);
+
+            if (bottomBubble == null)
+            {
+                Debug.LogError("Failed to create bottomBubble!");
+                return;
+            }
+            else
+            {
+                Debug.Log($"bottomBubble created: {bottomBubble.name}");
+            }
+
+            Debug.Log("Can Continue 4");
+
+            Debug.Log("Setting bubble position...");
+            RectTransform bottomRT = bottomBubble.GetComponent<RectTransform>();
+            if (bottomRT == null)
+            {
+                Debug.LogError("No RectTransform on bubble!");
+            }
+            else
+            {
+                bottomRT.anchoredPosition = new Vector2(bottomRT.anchoredPosition.x, -bubbleSpacing);
+                Debug.Log($"Bubble positioned at: {bottomRT.anchoredPosition}");
+            }
+
+            Debug.Log("Can Continue 4");
+
+            Debug.Log("Looking for TMP_Text component...");
+            TMP_Text bubbleText = bottomBubble.GetComponentInChildren<TMP_Text>();
+
+
             string text = story.Continue().Trim();
 
-            bottomBubble = Instantiate(npcBubblePrefab, bubbleContainer);
-            TMP_Text bubbleText = bottomBubble.GetComponentInChildren<TMP_Text>();
-            if (bubbleText != null)
+            if (bubbleText && story.currentChoices.Count == 0)
+            {
+                Invoke("EndDialogue", 2f);
+            }
+            else
+            {
+                
                 bubbleText.text = text;
+                Debug.Log($"Text set to: '{bubbleText.text}'");
 
-            RectTransform bottomRT = bottomBubble.GetComponent<RectTransform>();
-            if (bottomRT != null)
-                bottomRT.anchoredPosition = new Vector2(bottomRT.anchoredPosition.x, -bubbleSpacing);
+            }
+
+
+                // Check what happened after continuing
+                Debug.Log($"After Continue - canContinue: {story.canContinue}, choices: {story.currentChoices.Count}");
+
+
+
+
+
+
+
+
+
 
             if (story.currentChoices.Count > 0)
             {
+                Debug.Log("Creating choice buttons...");
                 for (int i = 0; i < story.currentChoices.Count; i++)
                 {
                     Choice choice = story.currentChoices[i];
@@ -118,6 +215,8 @@ public class DialogueManager : MonoBehaviour
                     int choiceIndex = i;
                     button.onClick.AddListener(() =>
                     {
+                        Debug.Log($"Choice {choiceIndex} clicked");
+
                         Destroy(topBubble);
                         topBubble = bottomBubble;
 
@@ -154,12 +253,14 @@ public class DialogueManager : MonoBehaviour
             }
             else if (!story.canContinue)
             {
+                Debug.Log("No more content after this bubble - ending in 2 seconds");
                 Invoke("EndDialogue", 2f);
             }
         }
-        else if (!story.canContinue)
+        else
         {
-            Invoke("EndDialogue", 5f);
+            Debug.Log("Story cannot continue - ending dialogue");
+            Invoke("EndDialogue", 2f);
         }
     }
 
@@ -200,6 +301,20 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+
+        Debug.Log($"EndDialogue called for character: {currentCharacterName}");
+
+        // Call OnCharacterMet for the current character
+        if (!string.IsNullOrEmpty(currentCharacterName) && StoryStateManager.Instance != null)
+        {
+            Debug.Log($"Sent to OnCharacterMet: {currentCharacterName}");
+            StoryStateManager.Instance.OnCharacterMet(currentCharacterName);
+        }
+        else
+        {
+            Debug.LogError("No current character or StoryStateManager is null!");
+        }
+
         if (nameText != null)
             nameText.text = "";
 

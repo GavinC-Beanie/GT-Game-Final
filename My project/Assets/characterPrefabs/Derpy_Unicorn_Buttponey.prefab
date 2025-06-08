@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterKnot: Derpy
-  characterName: Derpy Unicorn Buttponey
+  characterName: Derpy_Unicorn_Buttponey
   interactionDistance: 3
   dialogueEndDistance: 3
   dialogueManager: {fileID: 0}
