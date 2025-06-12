@@ -30,6 +30,8 @@ public class DialogueManager : MonoBehaviour
 
     public static bool isDialogueActive = false;
 
+    private bool choiceBeingProcessed = false;
+
     private StoryStateManager storyManager;
 
     void Awake()
@@ -145,7 +147,7 @@ public class DialogueManager : MonoBehaviour
         if (!story.canContinue && story.currentChoices.Count == 0)
         {
             Debug.Log("No more content and no choices - ending dialogue");
-            Invoke("EndDialogue", 2f);
+            Invoke("EndDialogue", 3f);
             return;
         }
 
@@ -255,6 +257,8 @@ public class DialogueManager : MonoBehaviour
             if (story.currentChoices.Count > 0)
             {
                 Debug.Log("Creating choice buttons...");
+                choiceBeingProcessed = false; // Reset flag for new choices
+
                 for (int i = 0; i < story.currentChoices.Count; i++)
                 {
                     Choice choice = story.currentChoices[i];
@@ -263,7 +267,29 @@ public class DialogueManager : MonoBehaviour
                     int choiceIndex = i;
                     button.onClick.AddListener(() =>
                     {
-                        Debug.Log($"Choice {choiceIndex} clicked");
+                        // Triple protection against double-clicking:
+
+                        // 1. Check processing flag
+                        if (choiceBeingProcessed)
+                        {
+                            Debug.Log("Choice already being processed - ignoring click");
+                            return;
+                        }
+
+                        // 2. Set flag immediately
+                        choiceBeingProcessed = true;
+
+                        // 3. Disable all buttons immediately
+                        Button[] allChoiceButtons = choicesPanel.GetComponentsInChildren<Button>();
+                        foreach (Button btn in allChoiceButtons)
+                        {
+                            btn.interactable = false;
+                        }
+
+                        Debug.Log($"Choice {choiceIndex} clicked and processed");
+
+                        // 4. Remove choice buttons immediately
+                        RemoveChildren(choicesPanel.transform);
 
                         Destroy(topBubble);
                         topBubble = bottomBubble;
@@ -288,7 +314,7 @@ public class DialogueManager : MonoBehaviour
                                 playerRT.anchoredPosition = new Vector2(playerRT.anchoredPosition.x, -bubbleSpacing);
 
                             if (story.canContinue)
-                                Invoke("RefreshView", 1.5f);
+                                Invoke("RefreshView", 2f);
                             else
                                 Invoke("EndDialogue", 3f);
                         }
@@ -308,13 +334,13 @@ public class DialogueManager : MonoBehaviour
             {
                 Debug.Log("No choices but can still continue - will continue automatically");
                 // Let the story continue processing (external functions, variable changes, etc.)
-                Invoke("RefreshView", 0.5f);
+                Invoke("RefreshView", 1.5f);
             }
         }
         else
         {
             Debug.Log("Story cannot continue - ending dialogue");
-            Invoke("EndDialogue", 3f);
+            Invoke("EndDialogue", 2f);
         }
     }
 

@@ -69,54 +69,6 @@ public class StoryStateManager : MonoBehaviour
         
     }
 
-    
-    private void HideAllCharactersAgain()
-    {
-        if (The_Commisioner) ApplyCharacterVisibility("The_Commisioner", false);
-        if (Bill) ApplyCharacterVisibility("Bill", false);
-        if (Bill_the_Drawggin) ApplyCharacterVisibility("Bill_the_Drawggin", false);
-        if (Pumplscroob) ApplyCharacterVisibility("Pumplscroob", false);
-        if (The_Crank) ApplyCharacterVisibility("The_Crank", false);
-        if (Gobster) ApplyCharacterVisibility("Gobster", false);
-        if (Grandma_Gob) ApplyCharacterVisibility("Grandma_Gob", false);
-        if (Derpy_Unicorn_Buttponey) ApplyCharacterVisibility("Derpy_Unicorn_Buttponey", false);
-        if (Gromblar) ApplyCharacterVisibility("Gromblar", false);
-        if (Wheres_Bill) ApplyCharacterVisibility("Wheres_Bill", false);
-        if (Tent_Dweller) ApplyCharacterVisibility("Tent_Dweller", false);
-        if (Grandpa) ApplyCharacterVisibility("Grandpa!", false);
-    }
-
-    /// <summary>Transition from Start phase to First Quest.</summary>
-
-
-    /// <summary>Transition from First Quest to Second Quest (called after Gram is interacted with).</summary>
-    public void StartSecondQuest()
-    {
-    
-        // Despawn all characters from first quest
-        HideAllCharactersAgain();
-        // Reset second quest flags
-        secondQuestBillMet = secondQuestCrankMet = secondQuestDerpyMet = secondQuestPumpMet = secondQuestGromblarMet = false;
-        // Activate the first NPC for second quest (Bill)
-        if (Bill) UpdateCharacterVisibility("Bill", true);
-        if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("secondQuestStarted"))
-        {
-            inkStory.variablesState["secondQuestStarted"] = true;
-        }
-    }
-
-    /// <summary>Transition from Second Quest to Third Quest.</summary>
-    public void StartThirdQuest()
-    {
-        
-        // Despawn all remaining characters from second quest
-        HideAllCharactersAgain();
-        if (Wheres_Bill) UpdateCharacterVisibility("Wheres_Bill", true);
-        // (If third quest has its own characters, they can be enabled here.)
-    }
-
-
-
 
     private Queue<CharacterVisibilityChange> pendingVisibilityChanges = new Queue<CharacterVisibilityChange>();
 
@@ -165,7 +117,9 @@ public class StoryStateManager : MonoBehaviour
         }
 
         Debug.Log($"Finished processing. Total processed: {processedCount}");
+
     }
+   
 
     // Also update ApplyCharacterVisibility to show what actually happens:
     private void ApplyCharacterVisibility(string characterName, bool isVisible)
@@ -215,6 +169,10 @@ public class StoryStateManager : MonoBehaviour
                 Debug.Log("Bill conversation completed!");
                 firstQuestBillMet = true;
                 UpdateCharacterVisibility("Bill_the_Drawggin", false);
+                if (firstQuestCrankMet)
+                {
+                    UpdateCharacterVisibility("Grandma_Gob", true);
+                }
                 break;
 
             case "met_crank":
@@ -222,7 +180,7 @@ public class StoryStateManager : MonoBehaviour
                 firstQuestCrankMet = true;
                 UpdateCharacterVisibility("The_Crank", false);
 
-                if (firstQuestGobsterMet)
+                if (firstQuestBillMet)
                 {
                     UpdateCharacterVisibility("Grandma_Gob", true);
                 }
@@ -238,18 +196,16 @@ public class StoryStateManager : MonoBehaviour
                 Debug.Log("Gobster conversation completed!");
                 firstQuestGobsterMet = true;
                 UpdateCharacterVisibility("Gobster", false);
-                if (firstQuestCrankMet)
-                {
-                    UpdateCharacterVisibility("Grandma_Gob", true);
-                }
                 break;
                 
 
-            case "met_gram":
+            case "asked_gram":
                 Debug.Log("Gram conversation completed!");
                 firstQuestGramMet = true;
                 UpdateCharacterVisibility("Grandma_Gob", false);
-                StartSecondQuest();
+                UpdateCharacterVisibility("Pumplscroob", false);
+                UpdateCharacterVisibility("Gobster", false);
+                UpdateCharacterVisibility("Bill", true);
                 break;
 
             case "met_2ndBill":
@@ -398,7 +354,7 @@ public class StoryStateManager : MonoBehaviour
                 Wheres_Bill = characterObject;
                 break;
 
-            case "grandpa!":
+            case "grandpa":
                 Grandpa = characterObject;
                 break;
 

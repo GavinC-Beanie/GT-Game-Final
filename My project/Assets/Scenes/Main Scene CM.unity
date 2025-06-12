@@ -8411,7 +8411,7 @@ MonoBehaviour:
     prefab: {fileID: 6921675875910493827, guid: 935ab119c8798844b99dc5117842befd, type: 3}
     spawnPosition: {fileID: 1184312993}
     story_state_manager: {fileID: 1812428958}
-  - characterName: Grandpa!
+  - characterName: Grandpa
     prefab: {fileID: 2731673020749993566, guid: fe07c1cfe2d46e1448fe2828fd43377a, type: 3}
     spawnPosition: {fileID: 1176564680}
     story_state_manager: {fileID: 1812428958}
