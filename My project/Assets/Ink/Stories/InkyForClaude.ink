@@ -1,3 +1,5 @@
+EXTERNAL OnVariableChanged(variableName, characterName)
+
 VAR met_com = false
 VAR met_bill = false
 VAR met_crank = false

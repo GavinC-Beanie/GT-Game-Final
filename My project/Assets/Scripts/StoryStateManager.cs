@@ -195,6 +195,61 @@ public class StoryStateManager : MonoBehaviour
     }
 
 
+    public void OnInkVariableChanged(string variableName, string characterName)
+    {
+        Debug.Log($"Processing Ink variable change: {variableName} for {characterName}");
+
+        switch (variableName)
+        {
+            case "met_com":
+                Debug.Log("Commissioner conversation completed!");
+                firstQuestComMet = true;
+                UpdateCharacterVisibility("The_Commisioner", false);
+                UpdateCharacterVisibility("Bill_the_Drawggin", true);
+                UpdateCharacterVisibility("Pumplscroob", true);
+                UpdateCharacterVisibility("The_Crank", true);
+                UpdateCharacterVisibility("Gobster", true);
+                break;
+
+            case "met_bill":
+                Debug.Log("Bill conversation completed!");
+                firstQuestBillMet = true;
+                UpdateCharacterVisibility("Bill_the_Drawggin", false);
+                break;
+
+            case "met_crank":
+                Debug.Log("Crank conversation completed!");
+                firstQuestCrankMet = true;
+                UpdateCharacterVisibility("The_Crank", false);
+                UpdateCharacterVisibility("Grandma_Gob", true);
+                break;
+
+            case "met_pump":
+                Debug.Log("Pump conversation completed!");
+                firstQuestPumpMet = true;
+                UpdateCharacterVisibility("Pumplscroob", false);
+                break;
+
+            case "met_gobster":
+                Debug.Log("Gobster conversation completed!");
+                firstQuestGobsterMet = true;
+                UpdateCharacterVisibility("Gobster", false);
+                break;
+
+            case "met_gram":
+                Debug.Log("Gram conversation completed!");
+                firstQuestGramMet = true;
+                UpdateCharacterVisibility("Grandma_Gob", false);
+                StartSecondQuest();
+                break;
+
+            // Add more cases for other characters as needed
+
+            default:
+                Debug.LogWarning($"Unknown variable change: {variableName}");
+                break;
+        }
+    }
 
 
     public void OnCharacterMet(string characterName)
@@ -204,219 +259,40 @@ public class StoryStateManager : MonoBehaviour
         Debug.Log("Chater Name passed " + characterName);
         switch (nameKey)
         {
-           
             case "the_commisioner":
-                Debug.Log("Commision intraction ending");
-
-{
-                    firstQuestComMet = true;
-                    
-
-                    if (inkStory != null && (bool)inkStory.variablesState["met_com"] == true)
-                    {
-                   
-                        inkStory.variablesState["met_com"] = true;
-                        Debug.Log("Variable Hit!!!");
-
-                        UpdateCharacterVisibility("The_Commisioner", false);
-                        Debug.Log("Com Uptaded to false");
-
-                        UpdateCharacterVisibility("Bill_the_Drawggin", true);
-                        UpdateCharacterVisibility("Pumplscroob", true);
-                        UpdateCharacterVisibility("The_Crank", true);
-                        UpdateCharacterVisibility("Gobster", true);
-                    }
-
-
-
-
-                    //UpdateCharacterVisibility("Bill_the_Drawggin", true);
-                    //UpdateCharacterVisibility("Pumplscroob", true);
-                    //UpdateCharacterVisibility("The_Crank", true);
-                    //UpdateCharacterVisibility("Gobster", true);
-
-                }
+                Debug.Log("Commissioner interaction started");
                 break;
 
             case "bill_the_drawggin":
-               
-                {
-                    firstQuestBillMet = true;
-                    UpdateCharacterVisibility("Bill_the_Drawggin", false);
-
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_bill"))
-                    {
-                        inkStory.variablesState["met_bill"] = true;
-                    }
-                }
+                Debug.Log("Bill interaction started");
                 break;
 
-            
             case "pump":
-              
-                {
-                    firstQuestPumpMet = true;
-                    UpdateCharacterVisibility("Pumplscroob", false);
-                    
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_pump"))
-                    {
-                        inkStory.variablesState["met_pump"] = true;
-                    }
-                }
-               
+                Debug.Log("Pump interaction started");
                 break;
 
             case "the_crank":
-             
-                {
-                    firstQuestCrankMet = true;
-                    UpdateCharacterVisibility("The_Crank", false);
-                    // If Crank **and** Bill are met, reveal Gram.
-                   
-                    UpdateCharacterVisibility("Grandma_Gob", true);
-
-
-
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_crank"))
-                    {
-                        inkStory.variablesState["met_crank"] = true;
-                    }
-                }
-               
+                Debug.Log("Crank interaction started");
                 break;
 
             case "gobster":
-          
-                {
-                    firstQuestGobsterMet = true;
-                    UpdateCharacterVisibility("Gobster", false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_gobster"))
-                    {
-                        inkStory.variablesState["met_gobster"] = true;
-                    }
-                }
-                // Gobster is not part of second quest, so no case for SecondQuestActive.
+                Debug.Log("Gobster interaction started");
                 break;
 
             case "gram":
-         
-                {
-                    firstQuestGramMet = true;
-                    UpdateCharacterVisibility("Grandma_Gob", false);
-                    UpdateCharacterVisibility("Pumplscroob", false);
-                    UpdateCharacterVisibility("Gobster", false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_gram"))
-                    {
-                        inkStory.variablesState["met_gram"] = true;
-                    }
-                    // Gram being asked marks end of first quest -> begin second quest.
-                    StartSecondQuest();
-                }
+                Debug.Log("Gram interaction started");
                 break;
 
-            case "bill":
-         
-                {
-                    secondQuestBillMet = true;
-                    UpdateCharacterVisibility("Bill", false);
-
-                    UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", true);
-                    UpdateCharacterVisibility("Grandpa!", true);
-
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_2ndBill"))
-                    {
-                        inkStory.variablesState["met_2ndBill"] = true;
-                    }
-                }
-                
-                break;
-
-            case "grandpa!":
-  
-                {
-                    secondQuestCrankMet = true;
-                    UpdateCharacterVisibility("Grandpa!", false);
-
-                    UpdateCharacterVisibility("Tent_Dweller", true);
-
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_2ndCrank"))
-                    {
-                        inkStory.variablesState["met_2ndCrank"] = true;
-                    }
-                }
-
-                break;
-
-            case "derpy_unicorn_buttponey":
-       
-                {
-                    secondQuestDerpyMet = true;
-                    UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", false);
-                    
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_derpy"))
-                    {
-                        inkStory.variablesState["met_derpy"] = true;
-                    }
-                    if (secondQuestGromblarMet)
-                    {
-                        StartThirdQuest();
-                    }
-                }
-                
-                break;
-
-            case "tent_dweller":
-
-                {
-                    secondQuestPumpMet = true;
-                    UpdateCharacterVisibility("Tent_Dweller", true);
-
-                    UpdateCharacterVisibility("Gromblar", true);
-
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_2ndPump"))
-                    {
-                        inkStory.variablesState["met_2ndPump"] = true;
-                    }
-                }
-
-                break;
-
-            case "gromblar":
-                {
-                    secondQuestGromblarMet = true;
-                    UpdateCharacterVisibility("Gromblar", false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_gromblar"))
-                    {
-                        inkStory.variablesState["met_gromblar"] = true;
-                    }
-                    // After Gromblar is met (and Derpy should be met by now), transition to third quest.
-                    if (secondQuestDerpyMet)
-                    {
-                        StartThirdQuest();
-                    }
-                    // (If for some reason Derpy wasn�t met yet, we hold off transitioning until Derpy is done.)
-                }
-                break;
-
-            case "where's_bill":
-         
-                {
-                    thirdQuestBillMet = true;
-                    UpdateCharacterVisibility("Wheres_Bill", false);
-                    if (inkStory != null && inkStory.variablesState.GlobalVariableExistsWithName("met_3rdBill"))
-                    {
-                        inkStory.variablesState["met_3rdBill"] = true;
-                    }
-                }
-                break;
+            // Add other cases as needed
 
             default:
-                Debug.Log("default for " + nameKey);
+                Debug.Log($"{nameKey} interaction started");
                 break;
-
         }
+
     }
-    
+
+
     public void AssignCharacterReference(string characterName, GameObject characterObject)
     {
         // Convert to lowercase for case-insensitive comparison

@@ -2,13 +2,14 @@ using UnityEngine;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
     public TextAsset inkJSON;
-    private Story story;
+    public Story story;
     //public List<groupItem> items = new List<groupItem>();
 
     public GameObject dialoguePanel;
@@ -44,17 +45,67 @@ public class DialogueManager : MonoBehaviour
     private string currentCharacterName = "";
 
     void Start()
+{
+    Debug.Log("DialogueManager Start");
+    dialoguePanel.SetActive(false);
+    
+    if (inkJSON == null)
     {
-        Debug.Log("Where the fuck is this at huh");
-        dialoguePanel.SetActive(false);
-        story = new Story(inkJSON.text);
-        string text = story.Continue().Trim();
-
-
-
+        Debug.LogError("inkJSON is null! Assign your Ink file in the Inspector!");
+        return;
     }
+    
+    try
+    {
+        Debug.Log("Creating Story from Ink JSON...");
+        story = new Story(inkJSON.text);
+        Debug.Log("Story created successfully");
+        
+        // Test if we can access variables
+        Debug.Log("Testing variable access...");
+        foreach (string varName in story.variablesState)
+        {
+            object value = story.variablesState[varName];
+            Debug.Log($"Found variable: {varName} = {value}");
+        }
+        
+        // Bind external function
+        Debug.Log("Binding external function...");
+        try
+        {
+            story.BindExternalFunction("OnVariableChanged", (string variableName, string characterName) => {
+                Debug.Log($"EXTERNAL FUNCTION CALLED!");
+                Debug.Log($"Variable: {variableName}");
+                Debug.Log($"Character: {characterName}");
+                
+                if (storyManager != null)
+                {
+                    Debug.Log($"Calling storyManager.OnInkVariableChanged()");
+                    storyManager.OnInkVariableChanged(variableName, characterName);
+                }
+                else
+                {
+                    Debug.LogError("storyManager is null!");
+                }
+            });
+            
+            Debug.Log("External function binding completed successfully");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"External function binding failed: {e.Message}");
+            Debug.LogError($"This means your Ink file is missing: EXTERNAL OnVariableChanged(variableName, characterName)");
+        }
+        
+        Debug.Log("Ready for dialogue! External function will be tested when you talk to a character.");
+    }
+    catch (System.Exception e)
+    {
+        Debug.LogError($"Failed to create Story: {e.Message}");
+    }
+}
 
-  
+
 
     public void StartDialogueFromKnot(string knotName)
     {
@@ -79,6 +130,9 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"Current character set to: {currentCharacterName}");
     }
 
+
+
+
     void RefreshView()
     {
         Debug.Log("RefreshView called");
@@ -95,16 +149,11 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-
-
-
-
-
-
         if (story.canContinue)
         {
-            Debug.Log("Can Continue 1");
+            Debug.Log("Story can continue - processing...");
 
+            // Move previous bubble up
             if (bottomBubble != null)
             {
                 Debug.Log("Moving previous bubble to top");
@@ -115,36 +164,21 @@ public class DialogueManager : MonoBehaviour
                     rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, 150);
             }
 
-            Debug.Log("Can Continue 2");
-
-            
-    
-
-            // Check if prefab exists
+            // Check prefabs
             if (npcBubblePrefab == null)
             {
-                Debug.LogError("npcBubblePrefab is NULL! Assign it in the Inspector!");
+                Debug.LogError("npcBubblePrefab is NULL!");
                 return;
             }
-            else
-            {
-                Debug.Log("npcBubblePrefab exists");
-            }
 
-            Debug.Log("Can Continue 3");
-
-            // Check if container exists
             if (bubbleContainer == null)
             {
-                Debug.LogError("bubbleContainer is NULL! Assign it in the Inspector!");
+                Debug.LogError("bubbleContainer is NULL!");
                 return;
             }
-            else
-            {
-                Debug.Log($"bubbleContainer exists: {bubbleContainer.name}");
-            }
 
-            Debug.Log("About to instantiate bubble...");
+            // Create new bubble
+            Debug.Log("Creating new bubble...");
             bottomBubble = Instantiate(npcBubblePrefab, bubbleContainer);
 
             if (bottomBubble == null)
@@ -152,57 +186,71 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogError("Failed to create bottomBubble!");
                 return;
             }
-            else
-            {
-                Debug.Log($"bottomBubble created: {bottomBubble.name}");
-            }
 
-            Debug.Log("Can Continue 4");
-
-            Debug.Log("Setting bubble position...");
+            // Position bubble
             RectTransform bottomRT = bottomBubble.GetComponent<RectTransform>();
-            if (bottomRT == null)
-            {
-                Debug.LogError("No RectTransform on bubble!");
-            }
-            else
-            {
+            if (bottomRT != null)
                 bottomRT.anchoredPosition = new Vector2(bottomRT.anchoredPosition.x, -bubbleSpacing);
-                Debug.Log($"Bubble positioned at: {bottomRT.anchoredPosition}");
-            }
 
-            Debug.Log("Can Continue 4");
-
-            Debug.Log("Looking for TMP_Text component...");
-            TMP_Text bubbleText = bottomBubble.GetComponentInChildren<TMP_Text>();
-
-
+            // Get and process text with comprehensive end detection
             string text = story.Continue().Trim();
+            Debug.Log($"Story text: '{text}' (Length: {text.Length})");
 
-            if (bubbleText && story.currentChoices.Count == 0)
+            // Multiple ways to detect dialogue end
+            bool isDialogueEnd = false;
+
+            // Check 1: Empty or whitespace text
+            if (string.IsNullOrWhiteSpace(text))
             {
-                Invoke("EndDialogue", 2f);
+                Debug.Log("Empty text detected - dialogue ending");
+                isDialogueEnd = true;
             }
-            else
+
+            // Check 2: No more content AND no choices
+            if (!story.canContinue && story.currentChoices.Count == 0)
             {
-                
-                bubbleText.text = text;
-                Debug.Log($"Text set to: '{bubbleText.text}'");
-
+                Debug.Log("No more content and no choices - dialogue ending");
+                isDialogueEnd = true;
             }
 
+            // Check 3: Special end marker (optional)
+            if (text.Contains("[END_DIALOGUE]"))
+            {
+                Debug.Log("End dialogue marker found - dialogue ending");
+                isDialogueEnd = true;
+                text = text.Replace("[END_DIALOGUE]", "").Trim(); // Remove marker from display
+            }
 
-                // Check what happened after continuing
-                Debug.Log($"After Continue - canContinue: {story.canContinue}, choices: {story.currentChoices.Count}");
+            if (isDialogueEnd)
+            {
+                // Don't create bubble for empty content
+                if (string.IsNullOrWhiteSpace(text) && bottomBubble != null)
+                {
+                    Destroy(bottomBubble);
+                    bottomBubble = null;
+                }
 
+                Invoke("EndDialogue", 1f);
+                return;
+            }
 
+            // Only set text if we have actual content
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                TMP_Text bubbleText = bottomBubble.GetComponentInChildren<TMP_Text>();
+                if (bubbleText != null)
+                {
+                    bubbleText.text = text;
+                    Debug.Log($"Text set successfully: '{text}'");
+                }
+                else
+                {
+                    Debug.LogError("bubbleText is null!");
+                }
+            }
 
-
-
-
-
-
-
+            // Check what to do next
+            Debug.Log($"After Continue - canContinue: {story.canContinue}, choices: {story.currentChoices.Count}");
 
             if (story.currentChoices.Count > 0)
             {
@@ -253,8 +301,14 @@ public class DialogueManager : MonoBehaviour
             }
             else if (!story.canContinue)
             {
-                Debug.Log("No more content after this bubble - ending in 2 seconds");
+                Debug.Log("No choices and cannot continue - ending dialogue");
                 Invoke("EndDialogue", 2f);
+            }
+            else
+            {
+                Debug.Log("No choices but can still continue - will continue automatically");
+                // Let the story continue processing (external functions, variable changes, etc.)
+                Invoke("RefreshView", 0.5f);
             }
         }
         else
@@ -263,6 +317,9 @@ public class DialogueManager : MonoBehaviour
             Invoke("EndDialogue", 2f);
         }
     }
+
+
+
 
     Button CreateChoiceView(string text)
     {
@@ -299,21 +356,27 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+
+    public void CheckVariableChanges()
+    {
+        if (story != null)
+        {
+            Debug.Log("Checking current variable values:");
+            foreach (string varName in story.variablesState)
+            {
+                object value = story.variablesState[varName];
+                Debug.Log($"{varName} = {value}");
+            }
+        }
+    }
+
+
     public void EndDialogue()
     {
 
         Debug.Log($"EndDialogue called for character: {currentCharacterName}");
 
-        // Call OnCharacterMet for the current character
-        if (!string.IsNullOrEmpty(currentCharacterName) && StoryStateManager.Instance != null)
-        {
-            Debug.Log($"Sent to OnCharacterMet: {currentCharacterName}");
-            StoryStateManager.Instance.OnCharacterMet(currentCharacterName);
-        }
-        else
-        {
-            Debug.LogError("No current character or StoryStateManager is null!");
-        }
+        CheckVariableChanges();
 
         if (nameText != null)
             nameText.text = "";
