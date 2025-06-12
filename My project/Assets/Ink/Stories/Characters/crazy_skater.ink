@@ -2,7 +2,8 @@
 
 
  ===Crazy_Skater===
-~met_skate = true     
+~met_skate = true 
+~ OnVariableChanged("met_skate", "Gobster")
     "Hell yeahhh... let's rip this shit!" 
     
     

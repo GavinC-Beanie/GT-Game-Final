@@ -13,8 +13,8 @@
     
     
     ===Off_my_porch===
-    ~met_crank=true
-    
+    ~met_crank = true
+    ~ OnVariableChanged("met_crank", "The_Crank")
     "Get off my porch! I said get off, get off! Get your goddamn floppers off my porch!"
     
     +"I just wanted to ask[?"]if you-"

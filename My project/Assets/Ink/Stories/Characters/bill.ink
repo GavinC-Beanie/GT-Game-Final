@@ -78,7 +78,7 @@ VAR pc_name = ""
     ===Hole_17===
     
     ~met_bill = true
-    
+    ~ OnVariableChanged("met_bill", "Bill_the_Draggin")
     <> Everyone keeps saying that their balls are disappering in hole 17. How can you get all the way through 17 holes and not finsish the course. People aren't even showing up anymore! Can you help me figure out how to fix this?" 
     +"I mean...["] I guess I can try." 
     ->Off_to_fix_it

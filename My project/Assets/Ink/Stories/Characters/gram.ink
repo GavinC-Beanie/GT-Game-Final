@@ -163,6 +163,7 @@ VAR buy_pie = false
    
     
     ===Talking_with_Gram===
+    ~ OnVariableChanged("met_com", "The_Commisioner")
     <>So, {what's up?" | anything else?" | anything else?" | anything else?"}
     
         
@@ -188,6 +189,8 @@ VAR buy_pie = false
     +"The crazy gezzer maybe?["] He loves his porch a little too much!" {met_crank}
         "Oh yeah, he can be a little much. Only person i've seen calm him down is Bill actual. I try to tell him that smoking that stuff can't be good for him, but he says it does the trick." 
             ~ asked_gram = true
+            ~ OnVariableChanged("asked_gram", "Grandma_Gob")
+            
         ++Okay...
             ->Talking_with_Gram
         ++"Cool... I think I'm good!"

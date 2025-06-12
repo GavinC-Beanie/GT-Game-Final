@@ -221,7 +221,11 @@ public class StoryStateManager : MonoBehaviour
                 Debug.Log("Crank conversation completed!");
                 firstQuestCrankMet = true;
                 UpdateCharacterVisibility("The_Crank", false);
-                UpdateCharacterVisibility("Grandma_Gob", true);
+
+                if (firstQuestGobsterMet)
+                {
+                    UpdateCharacterVisibility("Grandma_Gob", true);
+                }
                 break;
 
             case "met_pump":
@@ -230,11 +234,16 @@ public class StoryStateManager : MonoBehaviour
                 UpdateCharacterVisibility("Pumplscroob", false);
                 break;
 
-            case "met_gobster":
+            case "met_skate":
                 Debug.Log("Gobster conversation completed!");
                 firstQuestGobsterMet = true;
                 UpdateCharacterVisibility("Gobster", false);
+                if (firstQuestCrankMet)
+                {
+                    UpdateCharacterVisibility("Grandma_Gob", true);
+                }
                 break;
+                
 
             case "met_gram":
                 Debug.Log("Gram conversation completed!");
@@ -243,7 +252,55 @@ public class StoryStateManager : MonoBehaviour
                 StartSecondQuest();
                 break;
 
-            // Add more cases for other characters as needed
+            case "met_2ndBill":
+                Debug.Log("2ndBill conversation completed!");
+                secondQuestBillMet = true;
+                UpdateCharacterVisibility("Bill", false);
+                UpdateCharacterVisibility("Grandpa", true);
+                UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", true);
+                break;
+
+
+            case "met_2ndCrank":
+                Debug.Log("2ndCrank conversation completed!");
+                secondQuestCrankMet = true;
+                UpdateCharacterVisibility("Grandpa", false);
+                UpdateCharacterVisibility("Tent_Dweller", true);
+                break;
+
+            case "met_2ndPump":
+                Debug.Log("2ndPump conversation completed!");
+                secondQuestPumpMet = true;
+                UpdateCharacterVisibility("Tent_Dweller", false);
+                UpdateCharacterVisibility("Gromblar", true);
+                break;
+
+            case "met_derpy":
+                Debug.Log("Derpy conversation completed!");
+                secondQuestDerpyMet = true;
+                UpdateCharacterVisibility("Derpy_Unicorn_Buttponey", false);
+                if (secondQuestGromblarMet)
+                {
+                    UpdateCharacterVisibility("Where's_Bill", true);
+                }
+                break;
+            
+            case "met_grom":
+                Debug.Log("Grom conversation completed!");
+                secondQuestGromblarMet = true;
+                UpdateCharacterVisibility("Gromblar", false);
+
+                if (secondQuestDerpyMet)
+                {
+                    UpdateCharacterVisibility("Where's_Bill", true);
+                }
+                break;
+
+            case "met_3rdBill":
+                //make game end
+                break;
+
+            
 
             default:
                 Debug.LogWarning($"Unknown variable change: {variableName}");

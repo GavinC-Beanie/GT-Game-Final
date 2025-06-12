@@ -230,7 +230,7 @@ public class DialogueManager : MonoBehaviour
                     bottomBubble = null;
                 }
 
-                Invoke("EndDialogue", 1f);
+                Invoke("EndDialogue", 3f);
                 return;
             }
 
@@ -290,11 +290,11 @@ public class DialogueManager : MonoBehaviour
                             if (story.canContinue)
                                 Invoke("RefreshView", 1.5f);
                             else
-                                Invoke("EndDialogue", 2f);
+                                Invoke("EndDialogue", 3f);
                         }
                         else
                         {
-                            Invoke("EndDialogue", 2f);
+                            Invoke("EndDialogue", 3f);
                         }
                     });
                 }
@@ -302,7 +302,7 @@ public class DialogueManager : MonoBehaviour
             else if (!story.canContinue)
             {
                 Debug.Log("No choices and cannot continue - ending dialogue");
-                Invoke("EndDialogue", 2f);
+                Invoke("EndDialogue", 3f);
             }
             else
             {
@@ -314,7 +314,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.Log("Story cannot continue - ending dialogue");
-            Invoke("EndDialogue", 2f);
+            Invoke("EndDialogue", 3f);
         }
     }
 

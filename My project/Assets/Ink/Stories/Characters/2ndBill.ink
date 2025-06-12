@@ -45,6 +45,7 @@
 
 ===Try_Yourself===
 ~ met_2ndBill = true
+~ OnVariableChanged("met_2ndBill", "Bill")
 
 "Yep, try smoking with him yourself. Maybe he'll be willing to chat!"
 

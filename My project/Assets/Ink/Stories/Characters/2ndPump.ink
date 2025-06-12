@@ -48,6 +48,7 @@
 
 ===Why_freak
 ~ met_2ndPump = true
+~ OnVariableChanged("met_2ndPump", "Tent_Dweller")
 "Ugh! He likes to piss everywhere. Also got pie on his face. Plays with weird shit! Rotten flower I tell you!"
 
 +"Weird...[where is he?"]Where could I find this pissing weirdo!"

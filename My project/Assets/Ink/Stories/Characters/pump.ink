@@ -15,6 +15,7 @@
     
     ===Off_my_bench===
     ~met_pump = true
+    ~ OnVariableChanged("met_pump", "Pumplscroob")
     
     "Ahh, ahh get out of here! I don't know nothin' bout' nothin', now stop bothering me!" - Pumplscroob.. 
     

@@ -100,6 +100,7 @@ The Old Gob is rocking in his chair with his eyes closed; Peacful, as if he were
         
 ===Sus_Question
 ~ met_2ndCrank = true
+~ OnVariableChanged("met_2ndCrank", "Grandpa")
 "Well, I did see the gob who boats people taking some kid over to the corse. Was at a weird time too. Kid seemed to be fine so I wasn't worried."
     +"Very intersting!"
         "Is it now!"

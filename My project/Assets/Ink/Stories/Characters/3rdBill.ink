@@ -1,7 +1,8 @@
 
 
 ===back_back_to_bill===
-~ met_3rdBill = true
+
+
 ...
 
 *"Damn[!"], I really wanted to see bill again! Guess I'll just go see the commisioner."
@@ -10,7 +11,8 @@
     ->Done
 
 ===Done
-
+~ met_3rdBill = true
+~ OnVariableChanged("met_3rdBill", "Wheres_Bill")
 Welp!
 
 ->DONE

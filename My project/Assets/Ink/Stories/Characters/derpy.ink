@@ -79,6 +79,7 @@ VAR seen_derp = false
 
 ===derpy_course
 ~ met_derpy = true
+~ OnVariableChanged("met_derpy", "Derpy_Unicorn_Buttponey")
 "Ha! I take shits in some of the holes everynow then. Great right! Can you belive that?"
 
 *{met_grom}["Maybe?"] "Yeah... actually, I might..."
@@ -112,6 +113,7 @@ VAR seen_derp = false
 
 ===derpy_balls
 ~ met_derpy = true
+~ OnVariableChanged("met_derpy", "Derpy_Unicorn_Buttponey")
 "Oh, those are Grumpl eggs. You'll see more of those if this game gets funding. Some of them haven't been hatching though... That's been weird."
 
 *"Intresting...Could I ask another?"
