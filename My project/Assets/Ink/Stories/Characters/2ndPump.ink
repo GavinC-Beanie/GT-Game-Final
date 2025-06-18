@@ -26,6 +26,7 @@
 "Ah, ah okay, okay! I'm sorry. He's just so weird!"
 
 +"I'm sorry, what[!"] are you talking about!"
+    Well...<>
     ->The_kid
 
 +"He's [weird!"]the weird one!"
@@ -36,7 +37,7 @@
 
 ===The_kid
 
-<> "Well...this kid, he's a freak. Nice kid but weird. Makes me take him out there. Just can't say no. Hell if I kown a lic more!"
+<> "this kid, he's a freak. Nice kid but weird. Makes me take him out there. Just can't say no. Hell if I kown a lic more!"
 
 +"[Where is he?]Well where could I find this freakazoid?"
     ->Where_freak
